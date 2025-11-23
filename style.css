@@ -13,6 +13,7 @@
     /* Orb Colors (Light Mode) */
     --orb-1: #A0C4FF; --orb-2: #E0C3FC; --orb-3: #9BF6FF;
     
+    /* Settings */
     --blur-strength: 60px;
     --saturation: 180%;
     
@@ -64,32 +65,53 @@ body {
 
 
 /* =========================================
-   HEADER & NAVIGATION SYSTEM
+   HEADER SYSTEM (Grid Layout: Left-Center-Right)
    ========================================= */
 
 .site-header {
     position: sticky; top: 20px; z-index: 1000;
-    display: flex; flex-direction: column; align-items: center;
-    gap: 15px; margin-bottom: 80px;
+    width: 100%;
+    
+    /* Layout a 3 colonne: Logo - Menu - Toggle */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    
+    margin-bottom: 80px;
+    padding: 0 10px;
 }
 
-/* 1. BRAND LOGO */
+/* 1. BRAND LOGO (Sinistra) */
 .brand-logo {
+    justify-self: start;
     font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
     color: var(--text-main); text-decoration: none; text-transform: none;
-    padding: 8px 20px; background: var(--glass-bg); backdrop-filter: blur(20px);
+    padding: 10px 24px; 
+    background: var(--glass-bg); backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border); border-radius: 50px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+    transition: transform 0.3s ease;
 }
 .brand-logo:hover { transform: scale(1.05); }
 
-/* 2. DOCK DI NAVIGAZIONE */
+/* 2. DOCK DI NAVIGAZIONE (Centro) */
 nav {
-    position: relative; display: flex; justify-content: center; align-items: center;
+    justify-self: center;
+    position: relative; display: flex; align-items: center;
     padding: 6px; width: fit-content; border-radius: 100px;
-    background: var(--glass-bg); backdrop-filter: blur(40px) saturate(var(--saturation));
-    border: 1px solid var(--glass-border); box-shadow: 0 20px 40px var(--glass-shadow);
-    transition: background 0.5s ease, border 0.5s ease;
+    
+    /* Base Glass */
+    background: rgba(255, 255, 255, 0.01); 
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    
+    transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-theme="dark"] nav {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 /* Container Link */
@@ -98,30 +120,17 @@ nav {
     padding: 4px; background: rgba(125,125,125,0.05); border-radius: 100px;
 }
 
-/* Link Style & Toggle Style (IDENTICI ORA) */
-.nav-links a,
-.theme-toggle {
+/* Link Style */
+.nav-links a {
     position: relative; 
-    text-decoration: none; 
-    color: var(--text-muted);
-    padding: 10px 24px; 
-    border-radius: 100px; 
-    font-size: 0.9rem; 
-    font-weight: 600; 
-    z-index: 2; /* Sopra la bolla */
-    transition: color 0.3s ease; 
-    background: transparent;
-    border: none;
-    font-family: inherit;
-    cursor: pointer;
-    white-space: nowrap;
+    text-decoration: none; color: var(--text-muted);
+    padding: 10px 24px; border-radius: 100px; 
+    font-size: 0.9rem; font-weight: 600; 
+    z-index: 2; 
+    transition: color 0.3s ease; background: transparent;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-
-.nav-links a:hover, 
-.nav-links a.active,
-.theme-toggle:hover { 
-    color: var(--text-main); 
-}
+.nav-links a:hover, .nav-links a.active { color: var(--text-main); }
 
 /* Cursore Liquido Menu */
 .nav-liquid-cursor {
@@ -132,6 +141,59 @@ nav {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
     transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
     opacity: 0;
+}
+[data-theme="dark"] .nav-liquid-cursor {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+/* 3. THEME TOGGLE (Destra - Bubble Style) */
+.theme-toggle {
+    justify-self: end;
+    --x: 50%; --y: 50%; /* Tracking */
+    
+    position: relative; appearance: none; border: none; cursor: pointer;
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: var(--text-main);
+    
+    background: var(--glass-bg); backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
+    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Luce Interna Toggle */
+.theme-toggle::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(60px circle at var(--x) var(--y), rgba(255,255,255,0.4), transparent 60%);
+    mix-blend-mode: overlay; opacity: 0; transition: opacity 0.3s ease;
+}
+/* Bordo Luminoso Toggle */
+.theme-toggle::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; 
+    border: 1.5px solid transparent;
+    background: radial-gradient(50px circle at var(--x) var(--y), var(--text-main), transparent 50%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.theme-toggle:hover { transform: scale(1.1); background: var(--bg-color); }
+.theme-toggle:hover::before, .theme-toggle:hover::after { opacity: 1; }
+
+
+/* --- SCROLL EFFECT (High Readability) --- */
+body.scrolled nav {
+    backdrop-filter: blur(60px) saturate(200%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%);
+    background: rgba(255, 255, 255, 0.85); 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.5);
+    padding: 6px 20px;
+}
+[data-theme="dark"] body.scrolled nav {
+    background: rgba(10, 10, 10, 0.85); 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1);
 }
 
 
@@ -146,20 +208,18 @@ nav {
 }
 
 .social-icon-link {
-    --x: 50%; --y: 50%; /* Variabili Tracking */
+    --x: 50%; --y: 50%;
     position: relative; display: inline-flex; align-items: center; justify-content: center;
     width: 48px; height: 48px; border-radius: 50%;
     text-decoration: none; color: var(--text-muted); z-index: 2;
     transition: color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     background: transparent; border: 1px solid transparent;
-    
-    /* FIX RITAGLIO */
     overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
 }
 .social-icon-link svg { width: 24px; height: 24px; fill: currentColor; transition: transform 0.3s ease; pointer-events: none; }
 .social-icon-link:hover { color: var(--text-main); transform: scale(1.1); }
 
-/* CURSORE LIQUIDO SOCIAL */
+/* Cursore Liquido Social */
 .social-liquid-cursor {
     position: absolute; top: 0; left: 0;
     width: 48px; height: 48px; border-radius: 50%; z-index: 1; pointer-events: none;
@@ -169,14 +229,9 @@ nav {
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
     opacity: 0;
 }
-
 [data-theme="dark"] .social-liquid-cursor {
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15), inset 0 2px 6px rgba(255, 255, 255, 0.2);
-}
-[data-theme="dark"] .nav-liquid-cursor {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.2);
 }
 
 /* Brand Colors */
@@ -189,12 +244,12 @@ nav {
 .icon-facebook:hover { color: #1877F2; }
 .icon-discord:hover { color: #5865F2; }
 .icon-github:hover { color: var(--text-main); }
-.icon-threads:hover { color: #000000; box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.5); }
-[data-theme="dark"] .icon-threads:hover { color: #ffffff; box-shadow: 0 12px 30px -4px rgba(255, 255, 255, 0.2); }
+.icon-threads:hover { color: #000000; }
+[data-theme="dark"] .icon-threads:hover { color: #ffffff; }
 
 
 /* =========================================
-   CARDS & BUTTONS (Active Glass - FIXED CORNERS)
+   CARDS & BUTTONS (Active Glass - FIXED)
    ========================================= */
 .glass-card {
     --x: 50%; --y: 50%;
@@ -204,17 +259,13 @@ nav {
     border: 1px solid var(--glass-border);
     box-shadow: 0 30px 60px -12px var(--glass-shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     transition: transform 0.4s, box-shadow 0.4s, background 0.5s;
-    
-    /* FIX DEFINITIVO PER BLEEDING */
     overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
 }
-
 .glass-card::before {
     content: ""; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(800px circle at var(--x) var(--y), rgba(255,255,255,0.2), rgba(100,200,255,0.1), transparent 40%);
     mix-blend-mode: overlay; opacity: 0; transition: opacity 0.5s;
 }
-
 .glass-card::after {
     content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; 
     border: 1.5px solid transparent;
@@ -223,13 +274,12 @@ nav {
     -webkit-mask-composite: xor; mask-composite: exclude;
     opacity: 0; transition: opacity 0.5s;
 }
-
 .glass-card:hover { transform: translateY(-5px) scale(1.005); box-shadow: 0 40px 80px -12px var(--glass-shadow); }
 .glass-card:hover::before, .glass-card:hover::after { opacity: 1; }
 .glass-card > * { position: relative; z-index: 4; }
 
 
-/* --- BUTTON FIX --- */
+/* BUTTON FIX */
 .btn-apple {
     --x: 50%; --y: 50%;
     position: relative; display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 18px 36px;
@@ -238,8 +288,6 @@ nav {
     text-decoration: none; border-radius: 100px; font-size: 1rem; font-weight: 600;
     border: 1px solid var(--glass-border); cursor: pointer; 
     transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 10px 30px var(--glass-shadow);
-    
-    /* FIX DEFINITIVO PER BUTTONS */
     overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
 }
 .btn-apple::before {
@@ -261,558 +309,119 @@ nav {
 
 
 /* =========================================
-   UTILS
+   GITHUB TERMINAL & UTILS
    ========================================= */
-h1 { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; background: linear-gradient(180deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 20px; }
-p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); }
-.hud-data { 
-    font-family: "SF Mono", monospace; 
-    font-size: 0.7rem; 
-    font-weight: 600; 
-    color: var(--text-muted); 
-    margin-bottom: 24px; 
-    display: flex; 
-    align-items: center; 
-    gap: 14px; 
-}
-/* IL PALLINO DI STATO PULSANTE */
-.hud-dot { 
-    width: 10px; 
-    height: 10px; 
-    background-color: #34C759; /* Verde Apple */
-    border-radius: 50%; 
-    
-    /* Animazione Battito */
-    animation: status-pulse 2s infinite ease-in-out;
-    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-}
-@keyframes status-pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(52, 199, 89, 0); /* Alone che si allarga e svanisce */
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
-    }
-}
-
-/* Se vuoi che in Dark Mode il verde sia più brillante */
-[data-theme="dark"] .hud-dot {
-    background-color: #30D158;
-    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7);
-}
-/* PALLINO ROSSO PULSANTE (Busy/Offline) */
-.hud-dot.red {
-    background-color: #FF3B30; /* Rosso Apple */
-    animation: status-pulse-red 2s infinite ease-in-out;
-    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
-}
-
-/* Animazione Pulsazione Rossa */
-@keyframes status-pulse-red {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); /* Alone rosso che svanisce */
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
-    }
-}
-
-/* Dark Mode Override (Rosso più brillante) */
-[data-theme="dark"] .hud-dot.red {
-    background-color: #FF453A;
-    box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.7);
-}
-/* Aggiorna l'animazione per la dark mode se necessario, 
-   ma solitamente l'opacità gestisce bene la luminosità */
-.form-input, .form-textarea { width: 100%; padding: 18px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 18px; font-size: 1rem; color: var(--text-main); margin-bottom: 20px; }
-.form-input:focus, .form-textarea:focus { outline: none; background: var(--bg-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-
-@media (max-width: 768px) {
-    h1 { font-size: 2.8rem; }
-    .glass-card { padding: 32px; }
-    nav { flex-direction: column; width: 100%; border-radius: 24px; gap: 10px; }
-    .site-header { width: 90%; margin: 0 auto 50px auto; }
-}
-
-/* =========================================
-   GITHUB TERMINAL WIDGET
-   ========================================= */
-
-/* Il contenitore principale (Finestra del terminale) */
 .git-terminal {
     background: var(--glass-bg);
     backdrop-filter: blur(var(--blur-strength)) saturate(var(--saturation));
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    overflow: hidden; /* Contiene le righe */
+    border-radius: 24px; overflow: hidden; position: relative;
     box-shadow: 0 30px 60px -12px var(--glass-shadow);
-    font-family: "SF Mono", "Monaco", "Consolas", monospace; /* Font da codice */
-    position: relative;
+    font-family: "SF Mono", "Monaco", "Consolas", monospace;
+    transition: transform 0.4s ease;
 }
-
-/* Header del terminale (i pallini colorati stile Mac) */
-.terminal-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--glass-border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,0,0,0.02);
-}
-
+.terminal-header { padding: 16px 24px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.02); }
 .dot { width: 12px; height: 12px; border-radius: 50%; }
 .dot.red { background: #FF5F56; }
 .dot.yellow { background: #FFBD2E; }
 .dot.green { background: #27C93F; }
 .terminal-title { margin-left: 12px; font-size: 0.8rem; color: var(--text-muted); opacity: 0.7; }
+.terminal-body { padding: 10px 0; }
 
-/* Corpo del terminale */
-.terminal-body {
-    padding: 10px 0;
-}
-
-/* SINGOLA RIGA DI LOG (Interattiva) */
 .git-row {
-    /* Variabili Mouse Tracking */
     --x: 50%; --y: 50%;
-    
-    position: relative;
-    display: grid;
-    grid-template-columns: 80px 1fr 100px; /* Hash | Messaggio | Data */
-    align-items: center;
-    padding: 14px 24px;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    transition: color 0.2s ease, background 0.2s ease;
-    overflow: hidden; /* Per effetto luce */
+    position: relative; display: grid; grid-template-columns: 80px 1fr 100px;
+    align-items: center; padding: 14px 24px;
+    text-decoration: none; color: var(--text-muted); font-size: 0.9rem;
+    transition: color 0.2s, background 0.2s; overflow: hidden;
 }
-
-/* Effetto Luce Liquida sulla riga (come i bottoni) */
 .git-row::before {
     content: ""; position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(300px circle at var(--x) var(--y), rgba(255,255,255,0.15), transparent 60%);
     mix-blend-mode: overlay; opacity: 0; transition: opacity 0.3s;
 }
-
-.git-row:hover {
-    background: rgba(125,125,125,0.05);
-    color: var(--text-main);
-}
+.git-row:hover { background: rgba(125,125,125,0.05); color: var(--text-main); }
 .git-row:hover::before { opacity: 1; }
-
-/* Stili interni della riga */
 .git-hash { color: var(--accent); opacity: 0.8; }
 .git-msg { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; }
 .git-date { text-align: right; opacity: 0.5; font-size: 0.8rem; }
+.git-branch-icon { display: inline-block; margin-right: 8px; opacity: 0.5; transform: rotate(90deg); font-size: 0.8rem; }
 
-/* Icona Git ramificata (opzionale decorazione) */
-.git-branch-icon {
-    display: inline-block; margin-right: 8px; opacity: 0.5; transform: rotate(90deg); font-size: 0.8rem;
+h1 { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; background: linear-gradient(180deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 20px; }
+p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); }
+.hud-data { font-family: "SF Mono", monospace; font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; }
+
+.hud-dot { width: 10px; height: 10px; background-color: #34C759; border-radius: 50%; animation: status-pulse 2s infinite ease-in-out; box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+@keyframes status-pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 199, 89, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
 }
+[data-theme="dark"] .hud-dot { background-color: #30D158; box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7); }
 
-@media (max-width: 600px) {
-    .git-row { grid-template-columns: 60px 1fr; gap: 10px; }
-    .git-date { display: none; } /* Nascondi data su mobile */
+.hud-dot.red { background-color: #FF3B30; animation: status-pulse-red 2s infinite ease-in-out; box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
+@keyframes status-pulse-red {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
 }
-/* =========================================
-   CONTACT PAGE LAYOUT (Grid System)
-   ========================================= */
+[data-theme="dark"] .hud-dot.red { background-color: #FF453A; box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.7); }
 
-.contact-grid-wrapper {
-    display: grid;
-    /* Mobile first: una colonna una sotto l'altra */
-    grid-template-columns: 1fr; 
-    gap: 32px;
-    margin-top: 40px;
-}
+.form-input, .form-textarea { width: 100%; padding: 18px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 18px; font-size: 1rem; color: var(--text-main); margin-bottom: 20px; }
+.form-input:focus, .form-textarea:focus { outline: none; background: var(--bg-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
 
-/* Su schermi grandi, affianca le due isole */
-@media (min-width: 768px) {
-    .contact-grid-wrapper {
-        /* 60% modulo (più largo), 40% social (più stretto) */
-        grid-template-columns: 3fr 2fr; 
-        align-items: stretch; /* Stessa altezza */
-    }
-}
-
-/* --- Override per la Social Sidebar --- */
-/* Quando .social-container è dentro la nuova card laterale, resettiamo i suoi margini */
-.social-sidebar-card .social-container {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-    margin: 0; /* Resetta i margini automatici */
-    justify-content: flex-start; /* Allinea le icone a sinistra */
-    max-width: 100%;
-}
-
-/* Su mobile, quando torna sotto, ri-centriamo le icone */
-@media (max-width: 768px) {
-    .social-sidebar-card .social-container {
-        justify-content: center;
-    }
-    .social-sidebar-card {
-        text-align: center; /* Centra anche testo e titolo su mobile */
-    }
-}
-
-/* =========================================
-   ENTRANCE ANIMATIONS (Fade In Up)
-   ========================================= */
-
-/* 1. Definizione dei Keyframes (il movimento) */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        /* Parte 40px più in basso */
-        transform: translate3d(0, 40px, 0); 
-    }
-    to {
-        opacity: 1;
-        /* Arriva alla posizione originale */
-        transform: translate3d(0, 0, 0); 
-    }
-}
-
-/* 2. Applicazione a tutte le schede e bottoni grandi */
-/* L'uso di cubic-bezier rende il movimento fluido ("Apple-like") */
-.glass-card, 
-.git-terminal, 
-.btn-apple.tilt-card,
-.contact-form-card, 
-.social-sidebar-card {
-    /* Nome animazione | Durata | Curva di velocità | Mantieni stato finale */
-    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    
-    /* Inizialmente invisibili prima che parta l'animazione */
-    opacity: 0; 
-}
-
-
-/* =========================================
-   STAGGER DELAYS (Ritardi progressivi)
-   ========================================= */
-/* Questo serve per non far comparire tutto insieme "a blocco",
-   ma con un leggero ritardo a cascata se sono in una lista o griglia */
-
-/* Ritardo base per il primo elemento (es. la hero section card) */
-.glass-card:first-child, .git-terminal:first-child {
-    animation-delay: 0.1s;
-}
-
-/* Se sono dentro una griglia (es. pagina Lavori o Info) */
-.grid > *:nth-child(1) { animation-delay: 0.1s; }
-.grid > *:nth-child(2) { animation-delay: 0.25s; }
-.grid > *:nth-child(3) { animation-delay: 0.4s; }
-.grid > *:nth-child(4) { animation-delay: 0.55s; }
-.grid > *:nth-child(5) { animation-delay: 0.7s; }
-
-/* Se sono nella pagina Contatti (Modulo vs Social) */
-.contact-grid-wrapper > *:nth-child(1) { animation-delay: 0.1s; } /* Modulo */
-.contact-grid-wrapper > *:nth-child(2) { animation-delay: 0.3s; } /* Social */
-
-
-
-/* =========================================
-   SCROLL FADE & READABILITY MAGIC
-   ========================================= */
-
-/* 1. EFFETTO DISSOLVENZA CONTENUTO (The Mist Effect) */
-/* Questo applica una maschera al contenitore principale. 
-   Il contenuto diventa semi-trasparente (20% visibile) quando entra nella zona del menu (primi 120px),
-   e totalmente visibile (100% nero) subito dopo. */
-main {
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, black 150px);
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, black 150px);
-    /* Questo assicura che il footer o la fine della pagina non vengano tagliati */
-    min-height: 100vh; 
-}
-
-/* =========================================
-   SCROLL EFFECT: FROSTED GLASS (Leggibilità Menu)
-   ========================================= */
-
-/* Stato di base del menu (quando sei in cima alla pagina) */
-nav {
-    /* Blur normale */
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    /* Sfondo normale */
-    background: var(--glass-bg); 
-    
-    transition: 
-        background 0.5s ease, 
-        backdrop-filter 0.5s ease, 
-        box-shadow 0.5s ease, 
-        padding 0.3s ease;
-}
-
-/* =========================================
-   4. SCROLL EFFECT: READABLE FROSTED GLASS
-   ========================================= */
-
-/* Stato di base (Trasparenza massima per vedere i colori) */
-nav {
-    /* Sfondo quasi invisibile per catturare i colori */
-    background: rgba(255, 255, 255, 0.01); 
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-/* Dark Mode Base */
-[data-theme="dark"] nav {
-    background: rgba(0, 0, 0, 0.2); /* Leggermente più scuro di base */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* --- STATO SCROLLED (Quando il testo passa sotto) --- */
-body.scrolled nav {
-    /* 1. SFOCATURA ESTREMA: Trasforma il testo sotto in una macchia di colore */
-    backdrop-filter: blur(60px) saturate(200%);
-    -webkit-backdrop-filter: blur(60px) saturate(200%);
-    
-    /* 2. SFONDO PIÙ DENSO: Aumentiamo l'opacità per nascondere le lettere */
-    /* Light Mode: Bianco all'85% */
-    background: rgba(255, 255, 255, 0.85); 
-    
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.5);
-    padding: 6px 20px; /* Si compatta */
-}
-
-/* DARK MODE SCROLLED (Il fix principale per il tuo screenshot) */
-[data-theme="dark"] body.scrolled nav {
-    /* Dark Mode: Nero all'85% (era troppo basso prima) */
-    /* Questo nasconde il testo bianco che scorre sotto, mantenendo l'effetto vetro scuro */
-    background: rgba(10, 10, 10, 0.85); 
-    
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1);
-}
-
-/* --- AGGIUNTA: Text Shadow per leggibilità estrema --- */
-/* Aggiunge una piccolissima ombra al testo del menu per staccarlo da sfondi caotici */
-.nav-links a, .theme-toggle {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-}
-[data-theme="dark"] .nav-links a, [data-theme="dark"] .theme-toggle {
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5); /* Ombra più forte in dark mode */
-}
-
-/* =========================================
-   FOOTER (VISIBLE COPYRIGHT PILL)
-   ========================================= */
-.site-footer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 60px 0 40px 0; /* Più aria sopra */
-    margin-top: auto;
-}
-
+/* --- FOOTER --- */
+.site-footer { width: 100%; display: flex; justify-content: center; padding: 60px 0 40px 0; margin-top: auto; }
 .copyright-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    
-    /* Dimensioni e Forma Capsula */
-    padding: 8px 24px;
-    border-radius: 99px; /* Pillola perfetta */
-    
-    /* Stile Vetro Più Visibile */
-    background: rgba(255, 255, 255, 0.3); /* Più opaco per vedere la forma */
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    
-    /* Bordo e Ombra */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    
-    /* Tipografia */
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    
-    /* Non selezionabile */
-    user-select: none;
-    pointer-events: none;
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 24px; border-radius: 99px;
+    background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    font-size: 0.8rem; font-weight: 600; color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    user-select: none; pointer-events: none;
 }
+[data-theme="dark"] .copyright-pill { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.6); }
+.copyright-pill span { font-size: 1.1rem; line-height: 0; position: relative; top: -1px; }
 
-/* Dark Mode Override */
-[data-theme="dark"] .copyright-pill {
-    background: rgba(255, 255, 255, 0.1); /* Grigio chiaro trasparente */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.6);
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate3d(0, 40px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-
-.copyright-pill span {
-    font-size: 1.1rem;
-    line-height: 0;
-    position: relative;
-    top: -1px;
+.glass-card, .git-terminal, .btn-apple.tilt-card, .contact-form-card, .social-sidebar-card {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; 
 }
+.glass-card:first-child, .git-terminal:first-child, .contact-grid-wrapper > *:nth-child(1) { animation-delay: 0.1s; }
+.grid > *:nth-child(2), .contact-grid-wrapper > *:nth-child(2) { animation-delay: 0.25s; }
+.grid > *:nth-child(3) { animation-delay: 0.4s; }
 
-
-/* =========================================
-   MOBILE RESPONSIVENESS (MEDIA QUERIES)
-   ========================================= */
+/* --- MOBILE --- */
+.contact-grid-wrapper { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 40px; }
+@media (min-width: 768px) { .contact-grid-wrapper { grid-template-columns: 3fr 2fr; align-items: stretch; } }
+.social-sidebar-card .social-container { margin: 0; padding: 0; border-top: none; justify-content: flex-start; max-width: 100%; }
 
 @media (max-width: 768px) {
-
-    /* --- 1. LAYOUT GENERALE & SPAZIATURA --- */
-    .container {
-        padding: 40px 20px; /* Meno padding laterale */
-        width: 100%;
-        overflow-x: hidden; /* Evita scroll orizzontale indesiderato */
-    }
-
-    /* Riduzione testi giganti */
-    h1 {
-        font-size: 2.5rem; /* Da 4rem a 2.5rem */
-        line-height: 1.1;
-        word-wrap: break-word; /* Evita che parole lunghe rompano il layout */
-    }
-
-    h2 { font-size: 1.8rem; }
-    
-    /* --- 2. HERO SECTION & GRIGLIE --- */
-    /* Trasforma tutte le griglie in colonne singole */
-    .grid, 
-    .contact-grid-wrapper, 
-    section[style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important; /* Forza una colonna */
-        gap: 40px !important;
-        text-align: center; /* Centra il testo su mobile */
-    }
-
-    /* Centra il contenuto della Hero */
-    section[style*="grid-template-columns"] > div:first-child {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* --- 3. NAVIGAZIONE (MOBILE APP STYLE) --- */
-    .site-header {
-        width: 100%;
-        margin-bottom: 40px;
-    }
-
-    nav {
-        max-width: 100%;
-        padding: 4px;
-        border-radius: 20px; /* Meno rotondo su mobile per guadagnare spazio */
-        overflow: visible; /* Permette al contenuto di scorrere */
-    }
-
-    /* Rende il menu scorrevole orizzontalmente (come le storie di IG) */
-    .nav-links {
-        display: flex;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 4px;
-        width: 100%;
-        justify-content: flex-start; /* Allinea a sinistra per lo scroll */
-        -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
-        scrollbar-width: none; /* Nasconde scrollbar su Firefox */
-    }
-    
-    /* Nasconde scrollbar su Chrome/Safari */
+    .container { padding: 40px 20px; width: 100%; overflow-x: hidden; }
+    h1 { font-size: 2.5rem; } h2 { font-size: 1.8rem; }
+    .grid, .contact-grid-wrapper, section[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
+    section[style*="grid-template-columns"] > div:first-child { display: flex; flex-direction: column; align-items: center; }
+    .site-header { display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; position: relative; }
+    nav { max-width: 100%; padding: 4px; border-radius: 20px; overflow: visible; }
+    .nav-links { display: flex; overflow-x: auto; white-space: nowrap; padding: 4px; width: 100%; justify-content: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .nav-links::-webkit-scrollbar { display: none; }
-
-    .nav-links a, 
-    .theme-toggle {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-        flex-shrink: 0; /* Impedisce ai bottoni di schiacciarsi */
-    }
-
-    /* Nascondi la bolla su mobile se crea problemi, o lasciala */
-    /* Su mobile spesso è meglio un highlight statico o semplificato */
-    /* .nav-liquid-cursor { display: none; } */ 
-
-
-    /* --- 4. CARDS & ELEMENTI --- */
-    .glass-card {
-        padding: 24px; /* Meno spazio interno nelle card */
-        border-radius: 24px;
-    }
-
-    /* Hero Visual (la card con l'icona Apple) */
-    /* La rendiamo più compatta */
-    .glass-card[style*="height: 350px"] {
-        height: 280px !important;
-        width: 100%;
-    }
-
-    /* --- 5. GITHUB TERMINAL --- */
-    .git-row {
-        grid-template-columns: 50px 1fr; /* Nasconde la colonna data se serve */
-        font-size: 0.8rem;
-        padding: 12px;
-    }
-    
-    .git-date {
-        display: none; /* Nascondiamo la data su schermi molto piccoli */
-    }
-    
-    .git-hash {
-        font-size: 0.75rem;
-    }
-
-    /* --- 6. SOCIAL & CONTACTS --- */
-    .social-container {
-        gap: 10px; /* Icone più vicine */
-    }
-    
-    .social-icon-link {
-        width: 42px; /* Icone leggermente più piccole */
-        height: 42px;
-    }
-
-    .contact-grid-wrapper form {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    /* Input del form a colonna singola */
-    .contact-grid-wrapper form > div {
-        grid-template-columns: 1fr !important;
-    }
-
-    /* --- 7. BACKGROUND ORBS --- */
-    /* Riduciamo le sfere per non appesantire la GPU del telefono */
-    .orb {
-        filter: blur(50px); /* Meno blur per performance */
-    }
-    .orb-1 { width: 80vw; height: 80vw; }
-    .orb-2 { width: 90vw; height: 90vw; }
+    .nav-links a { padding: 8px 16px; font-size: 0.85rem; flex-shrink: 0; }
+    /* Su mobile, il toggle va in alto a destra */
+    .theme-toggle { position: absolute; top: 0; right: 10px; width: 42px; height: 42px; }
+    .brand-logo { align-self: center; }
+    .glass-card { padding: 24px; border-radius: 24px; }
+    .git-row { grid-template-columns: 50px 1fr; font-size: 0.8rem; padding: 12px; }
+    .git-date { display: none; } .git-hash { font-size: 0.75rem; }
+    .social-container { gap: 10px; justify-content: center; }
+    .social-sidebar-card .social-container { justify-content: center; }
+    .social-icon-link { width: 42px; height: 42px; }
+    .contact-grid-wrapper form { display: flex; flex-direction: column; }
+    .contact-grid-wrapper form > div { grid-template-columns: 1fr !important; }
+    .orb { filter: blur(50px); } .orb-1 { width: 80vw; height: 80vw; } .orb-2 { width: 90vw; height: 90vw; }
 }
-
-/* Fix per schermi piccolissimi (iPhone SE, etc) */
-@media (max-width: 380px) {
-    h1 { font-size: 2rem; }
-    .nav-links a { padding: 8px 12px; font-size: 0.8rem; }
-}
-
-
-/* =========================================
-   FINE STYLE.CSS
-   ========================================= */
+@media (max-width: 380px) { h1 { font-size: 2rem; } .nav-links a { padding: 8px 12px; font-size: 0.8rem; } }
