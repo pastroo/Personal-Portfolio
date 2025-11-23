@@ -1,0 +1,675 @@
+:root {
+    /* --- iOS 26 PALETTE --- */
+    --bg-color: #F2F4F6;
+    --text-main: #000000;
+    --text-muted: rgba(60, 60, 67, 0.6);
+    --accent: #007AFF;
+    
+    /* Glass Variables */
+    --glass-bg: rgba(255, 255, 255, 0.45); 
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Orb Colors (Light Mode) */
+    --orb-1: #A0C4FF; --orb-2: #E0C3FC; --orb-3: #9BF6FF;
+    
+    --blur-strength: 60px;
+    --saturation: 180%;
+    
+    /* Button Colors */
+    --btn-bg: #000000;
+    --btn-text: #ffffff;
+}
+
+/* --- DARK MODE OVERRIDES --- */
+[data-theme="dark"] {
+    --bg-color: #050505;
+    --text-main: #ffffff;
+    --text-muted: rgba(235, 235, 245, 0.6);
+    
+    --glass-bg: rgba(30, 30, 30, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+    
+    --orb-1: #004080; --orb-2: #5e2a84; --orb-3: #006666;
+    
+    --btn-bg: #000000; --btn-text: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* --- BACKGROUND SYSTEM (ORBS) --- */
+.ios-gradient-bg { position: fixed; inset: 0; z-index: -1; background: var(--bg-color); overflow: hidden; transition: background 0.5s ease; }
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.8; animation: floatOrb 25s infinite ease-in-out; transition: background 0.5s ease; }
+.orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--orb-1); }
+.orb-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--orb-2); animation-delay: -5s; }
+.orb-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: var(--orb-3); animation-delay: -10s; }
+@keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.container { max-width: 1120px; margin: 0 auto; padding: 80px 24px; }
+
+
+/* =========================================
+   HEADER & NAVIGATION SYSTEM
+   ========================================= */
+
+.site-header {
+    position: sticky; top: 20px; z-index: 1000;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 15px; margin-bottom: 80px;
+}
+
+/* 1. BRAND LOGO */
+.brand-logo {
+    font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--text-main); text-decoration: none; text-transform: none;
+    padding: 8px 20px; background: var(--glass-bg); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+}
+.brand-logo:hover { transform: scale(1.05); }
+
+/* 2. DOCK DI NAVIGAZIONE */
+nav {
+    position: relative; display: flex; justify-content: center; align-items: center;
+    padding: 6px; width: fit-content; border-radius: 100px;
+    background: var(--glass-bg); backdrop-filter: blur(40px) saturate(var(--saturation));
+    border: 1px solid var(--glass-border); box-shadow: 0 20px 40px var(--glass-shadow);
+    transition: background 0.5s ease, border 0.5s ease;
+}
+
+/* Container Link */
+.nav-links {
+    position: relative; display: flex; align-items: center; gap: 2px;
+    padding: 4px; background: rgba(125,125,125,0.05); border-radius: 100px;
+}
+
+/* Link Style & Toggle Style (IDENTICI ORA) */
+.nav-links a,
+.theme-toggle {
+    position: relative; 
+    text-decoration: none; 
+    color: var(--text-muted);
+    padding: 10px 24px; 
+    border-radius: 100px; 
+    font-size: 0.9rem; 
+    font-weight: 600; 
+    z-index: 2; /* Sopra la bolla */
+    transition: color 0.3s ease; 
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nav-links a:hover, 
+.nav-links a.active,
+.theme-toggle:hover { 
+    color: var(--text-main); 
+}
+
+/* Cursore Liquido Menu */
+.nav-liquid-cursor {
+    position: absolute; top: 4px; left: 4px; height: calc(100% - 8px);
+    border-radius: 100px; z-index: 1; pointer-events: none;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.3), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+    transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+    opacity: 0;
+}
+
+
+/* =========================================
+   SOCIAL ICONS SYSTEM (GRID MORPHING)
+   ========================================= */
+.social-container {
+    position: relative; margin-top: 50px; padding-top: 30px; 
+    border-top: 1px solid var(--glass-border); 
+    display: flex; justify-content: center; flex-wrap: wrap; 
+    gap: 12px; max-width: 420px; margin: 50px auto 0 auto; padding-bottom: 20px;
+}
+
+.social-icon-link {
+    --x: 50%; --y: 50%; /* Variabili Tracking */
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    text-decoration: none; color: var(--text-muted); z-index: 2;
+    transition: color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: transparent; border: 1px solid transparent;
+    
+    /* FIX RITAGLIO */
+    overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
+}
+.social-icon-link svg { width: 24px; height: 24px; fill: currentColor; transition: transform 0.3s ease; pointer-events: none; }
+.social-icon-link:hover { color: var(--text-main); transform: scale(1.1); }
+
+/* CURSORE LIQUIDO SOCIAL */
+.social-liquid-cursor {
+    position: absolute; top: 0; left: 0;
+    width: 48px; height: 48px; border-radius: 50%; z-index: 1; pointer-events: none;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.6);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+    opacity: 0;
+}
+
+[data-theme="dark"] .social-liquid-cursor {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15), inset 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+[data-theme="dark"] .nav-liquid-cursor {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+/* Brand Colors */
+.icon-linkedin:hover { color: #0077b5; }
+.icon-instagram:hover { color: #E1306C; }
+.icon-tiktok:hover { color: var(--text-main); }
+.icon-youtube:hover { color: #FF0000; }
+.icon-twitch:hover { color: #9146FF; }
+.icon-x:hover { color: var(--text-main); }
+.icon-facebook:hover { color: #1877F2; }
+.icon-discord:hover { color: #5865F2; }
+.icon-github:hover { color: var(--text-main); }
+.icon-threads:hover { color: #000000; box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.5); }
+[data-theme="dark"] .icon-threads:hover { color: #ffffff; box-shadow: 0 12px 30px -4px rgba(255, 255, 255, 0.2); }
+
+
+/* =========================================
+   CARDS & BUTTONS (Active Glass - FIXED CORNERS)
+   ========================================= */
+.glass-card {
+    --x: 50%; --y: 50%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength)) saturate(var(--saturation));
+    border-radius: 40px; padding: 48px; position: relative; 
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 30px 60px -12px var(--glass-shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s, box-shadow 0.4s, background 0.5s;
+    
+    /* FIX DEFINITIVO PER BLEEDING */
+    overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
+}
+
+.glass-card::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(800px circle at var(--x) var(--y), rgba(255,255,255,0.2), rgba(100,200,255,0.1), transparent 40%);
+    mix-blend-mode: overlay; opacity: 0; transition: opacity 0.5s;
+}
+
+.glass-card::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; 
+    border: 1.5px solid transparent;
+    background: radial-gradient(600px circle at var(--x) var(--y), rgba(255,255,255,0.8), transparent 60%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.5s;
+}
+
+.glass-card:hover { transform: translateY(-5px) scale(1.005); box-shadow: 0 40px 80px -12px var(--glass-shadow); }
+.glass-card:hover::before, .glass-card:hover::after { opacity: 1; }
+.glass-card > * { position: relative; z-index: 4; }
+
+
+/* --- BUTTON FIX --- */
+.btn-apple {
+    --x: 50%; --y: 50%;
+    position: relative; display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 18px 36px;
+    background: var(--btn-bg); color: var(--btn-text); 
+    backdrop-filter: blur(20px) saturate(180%);
+    text-decoration: none; border-radius: 100px; font-size: 1rem; font-weight: 600;
+    border: 1px solid var(--glass-border); cursor: pointer; 
+    transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 10px 30px var(--glass-shadow);
+    
+    /* FIX DEFINITIVO PER BUTTONS */
+    overflow: hidden; -webkit-mask: linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0);
+}
+.btn-apple::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(150px circle at var(--x) var(--y), rgba(255,255,255,0.3), rgba(0,122,255,0.2), transparent 60%);
+    mix-blend-mode: screen; opacity: 0; transition: opacity 0.3s;
+}
+.btn-apple::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; 
+    border: 1.5px solid transparent;
+    background: radial-gradient(120px circle at var(--x) var(--y), rgba(255,255,255,0.9), transparent 60%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity 0.3s;
+}
+.btn-apple:hover { transform: scale(1.02); box-shadow: 0 15px 40px var(--glass-shadow); }
+.btn-apple:hover::before, .btn-apple:hover::after { opacity: 1; }
+.btn-apple span { position: relative; z-index: 2; }
+
+
+/* =========================================
+   UTILS
+   ========================================= */
+h1 { font-size: 4rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 24px; background: linear-gradient(180deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 20px; }
+p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); }
+.hud-data { 
+    font-family: "SF Mono", monospace; 
+    font-size: 0.7rem; 
+    font-weight: 600; 
+    color: var(--text-muted); 
+    margin-bottom: 24px; 
+    display: flex; 
+    align-items: center; 
+    gap: 14px; 
+}
+/* IL PALLINO DI STATO PULSANTE */
+.hud-dot { 
+    width: 10px; 
+    height: 10px; 
+    background-color: #34C759; /* Verde Apple */
+    border-radius: 50%; 
+    
+    /* Animazione Battito */
+    animation: status-pulse 2s infinite ease-in-out;
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+}
+@keyframes status-pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(52, 199, 89, 0); /* Alone che si allarga e svanisce */
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+    }
+}
+
+/* Se vuoi che in Dark Mode il verde sia più brillante */
+[data-theme="dark"] .hud-dot {
+    background-color: #30D158;
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7);
+}
+/* PALLINO ROSSO PULSANTE (Busy/Offline) */
+.hud-dot.red {
+    background-color: #FF3B30; /* Rosso Apple */
+    animation: status-pulse-red 2s infinite ease-in-out;
+    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
+}
+
+/* Animazione Pulsazione Rossa */
+@keyframes status-pulse-red {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 59, 48, 0); /* Alone rosso che svanisce */
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+    }
+}
+
+/* Dark Mode Override (Rosso più brillante) */
+[data-theme="dark"] .hud-dot.red {
+    background-color: #FF453A;
+    box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.7);
+}
+/* Aggiorna l'animazione per la dark mode se necessario, 
+   ma solitamente l'opacità gestisce bene la luminosità */
+.form-input, .form-textarea { width: 100%; padding: 18px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 18px; font-size: 1rem; color: var(--text-main); margin-bottom: 20px; }
+.form-input:focus, .form-textarea:focus { outline: none; background: var(--bg-color); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.8rem; }
+    .glass-card { padding: 32px; }
+    nav { flex-direction: column; width: 100%; border-radius: 24px; gap: 10px; }
+    .site-header { width: 90%; margin: 0 auto 50px auto; }
+}
+
+/* =========================================
+   GITHUB TERMINAL WIDGET
+   ========================================= */
+
+/* Il contenitore principale (Finestra del terminale) */
+.git-terminal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength)) saturate(var(--saturation));
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    overflow: hidden; /* Contiene le righe */
+    box-shadow: 0 30px 60px -12px var(--glass-shadow);
+    font-family: "SF Mono", "Monaco", "Consolas", monospace; /* Font da codice */
+    position: relative;
+}
+
+/* Header del terminale (i pallini colorati stile Mac) */
+.terminal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.02);
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #FF5F56; }
+.dot.yellow { background: #FFBD2E; }
+.dot.green { background: #27C93F; }
+.terminal-title { margin-left: 12px; font-size: 0.8rem; color: var(--text-muted); opacity: 0.7; }
+
+/* Corpo del terminale */
+.terminal-body {
+    padding: 10px 0;
+}
+
+/* SINGOLA RIGA DI LOG (Interattiva) */
+.git-row {
+    /* Variabili Mouse Tracking */
+    --x: 50%; --y: 50%;
+    
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px 1fr 100px; /* Hash | Messaggio | Data */
+    align-items: center;
+    padding: 14px 24px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: color 0.2s ease, background 0.2s ease;
+    overflow: hidden; /* Per effetto luce */
+}
+
+/* Effetto Luce Liquida sulla riga (come i bottoni) */
+.git-row::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(300px circle at var(--x) var(--y), rgba(255,255,255,0.15), transparent 60%);
+    mix-blend-mode: overlay; opacity: 0; transition: opacity 0.3s;
+}
+
+.git-row:hover {
+    background: rgba(125,125,125,0.05);
+    color: var(--text-main);
+}
+.git-row:hover::before { opacity: 1; }
+
+/* Stili interni della riga */
+.git-hash { color: var(--accent); opacity: 0.8; }
+.git-msg { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; }
+.git-date { text-align: right; opacity: 0.5; font-size: 0.8rem; }
+
+/* Icona Git ramificata (opzionale decorazione) */
+.git-branch-icon {
+    display: inline-block; margin-right: 8px; opacity: 0.5; transform: rotate(90deg); font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+    .git-row { grid-template-columns: 60px 1fr; gap: 10px; }
+    .git-date { display: none; } /* Nascondi data su mobile */
+}
+/* =========================================
+   CONTACT PAGE LAYOUT (Grid System)
+   ========================================= */
+
+.contact-grid-wrapper {
+    display: grid;
+    /* Mobile first: una colonna una sotto l'altra */
+    grid-template-columns: 1fr; 
+    gap: 32px;
+    margin-top: 40px;
+}
+
+/* Su schermi grandi, affianca le due isole */
+@media (min-width: 768px) {
+    .contact-grid-wrapper {
+        /* 60% modulo (più largo), 40% social (più stretto) */
+        grid-template-columns: 3fr 2fr; 
+        align-items: stretch; /* Stessa altezza */
+    }
+}
+
+/* --- Override per la Social Sidebar --- */
+/* Quando .social-container è dentro la nuova card laterale, resettiamo i suoi margini */
+.social-sidebar-card .social-container {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    margin: 0; /* Resetta i margini automatici */
+    justify-content: flex-start; /* Allinea le icone a sinistra */
+    max-width: 100%;
+}
+
+/* Su mobile, quando torna sotto, ri-centriamo le icone */
+@media (max-width: 768px) {
+    .social-sidebar-card .social-container {
+        justify-content: center;
+    }
+    .social-sidebar-card {
+        text-align: center; /* Centra anche testo e titolo su mobile */
+    }
+}
+
+/* =========================================
+   ENTRANCE ANIMATIONS (Fade In Up)
+   ========================================= */
+
+/* 1. Definizione dei Keyframes (il movimento) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        /* Parte 40px più in basso */
+        transform: translate3d(0, 40px, 0); 
+    }
+    to {
+        opacity: 1;
+        /* Arriva alla posizione originale */
+        transform: translate3d(0, 0, 0); 
+    }
+}
+
+/* 2. Applicazione a tutte le schede e bottoni grandi */
+/* L'uso di cubic-bezier rende il movimento fluido ("Apple-like") */
+.glass-card, 
+.git-terminal, 
+.btn-apple.tilt-card,
+.contact-form-card, 
+.social-sidebar-card {
+    /* Nome animazione | Durata | Curva di velocità | Mantieni stato finale */
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    
+    /* Inizialmente invisibili prima che parta l'animazione */
+    opacity: 0; 
+}
+
+
+/* =========================================
+   STAGGER DELAYS (Ritardi progressivi)
+   ========================================= */
+/* Questo serve per non far comparire tutto insieme "a blocco",
+   ma con un leggero ritardo a cascata se sono in una lista o griglia */
+
+/* Ritardo base per il primo elemento (es. la hero section card) */
+.glass-card:first-child, .git-terminal:first-child {
+    animation-delay: 0.1s;
+}
+
+/* Se sono dentro una griglia (es. pagina Lavori o Info) */
+.grid > *:nth-child(1) { animation-delay: 0.1s; }
+.grid > *:nth-child(2) { animation-delay: 0.25s; }
+.grid > *:nth-child(3) { animation-delay: 0.4s; }
+.grid > *:nth-child(4) { animation-delay: 0.55s; }
+.grid > *:nth-child(5) { animation-delay: 0.7s; }
+
+/* Se sono nella pagina Contatti (Modulo vs Social) */
+.contact-grid-wrapper > *:nth-child(1) { animation-delay: 0.1s; } /* Modulo */
+.contact-grid-wrapper > *:nth-child(2) { animation-delay: 0.3s; } /* Social */
+
+
+
+/* =========================================
+   SCROLL FADE & READABILITY MAGIC
+   ========================================= */
+
+/* 1. EFFETTO DISSOLVENZA CONTENUTO (The Mist Effect) */
+/* Questo applica una maschera al contenitore principale. 
+   Il contenuto diventa semi-trasparente (20% visibile) quando entra nella zona del menu (primi 120px),
+   e totalmente visibile (100% nero) subito dopo. */
+main {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, black 150px);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, black 150px);
+    /* Questo assicura che il footer o la fine della pagina non vengano tagliati */
+    min-height: 100vh; 
+}
+
+/* =========================================
+   SCROLL EFFECT: FROSTED GLASS (Leggibilità Menu)
+   ========================================= */
+
+/* Stato di base del menu (quando sei in cima alla pagina) */
+nav {
+    /* Blur normale */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    /* Sfondo normale */
+    background: var(--glass-bg); 
+    
+    transition: 
+        background 0.5s ease, 
+        backdrop-filter 0.5s ease, 
+        box-shadow 0.5s ease, 
+        padding 0.3s ease;
+}
+
+/* =========================================
+   4. SCROLL EFFECT: READABLE FROSTED GLASS
+   ========================================= */
+
+/* Stato di base (Trasparenza massima per vedere i colori) */
+nav {
+    /* Sfondo quasi invisibile per catturare i colori */
+    background: rgba(255, 255, 255, 0.01); 
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Dark Mode Base */
+[data-theme="dark"] nav {
+    background: rgba(0, 0, 0, 0.2); /* Leggermente più scuro di base */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- STATO SCROLLED (Quando il testo passa sotto) --- */
+body.scrolled nav {
+    /* 1. SFOCATURA ESTREMA: Trasforma il testo sotto in una macchia di colore */
+    backdrop-filter: blur(60px) saturate(200%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%);
+    
+    /* 2. SFONDO PIÙ DENSO: Aumentiamo l'opacità per nascondere le lettere */
+    /* Light Mode: Bianco all'85% */
+    background: rgba(255, 255, 255, 0.85); 
+    
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.5);
+    padding: 6px 20px; /* Si compatta */
+}
+
+/* DARK MODE SCROLLED (Il fix principale per il tuo screenshot) */
+[data-theme="dark"] body.scrolled nav {
+    /* Dark Mode: Nero all'85% (era troppo basso prima) */
+    /* Questo nasconde il testo bianco che scorre sotto, mantenendo l'effetto vetro scuro */
+    background: rgba(10, 10, 10, 0.85); 
+    
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* --- AGGIUNTA: Text Shadow per leggibilità estrema --- */
+/* Aggiunge una piccolissima ombra al testo del menu per staccarlo da sfondi caotici */
+.nav-links a, .theme-toggle {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+}
+[data-theme="dark"] .nav-links a, [data-theme="dark"] .theme-toggle {
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5); /* Ombra più forte in dark mode */
+}
+
+/* =========================================
+   FOOTER (VISIBLE COPYRIGHT PILL)
+   ========================================= */
+.site-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 60px 0 40px 0; /* Più aria sopra */
+    margin-top: auto;
+}
+
+.copyright-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    
+    /* Dimensioni e Forma Capsula */
+    padding: 8px 24px;
+    border-radius: 99px; /* Pillola perfetta */
+    
+    /* Stile Vetro Più Visibile */
+    background: rgba(255, 255, 255, 0.3); /* Più opaco per vedere la forma */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    
+    /* Bordo e Ombra */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    
+    /* Tipografia */
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Non selezionabile */
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Dark Mode Override */
+[data-theme="dark"] .copyright-pill {
+    background: rgba(255, 255, 255, 0.1); /* Grigio chiaro trasparente */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.copyright-pill span {
+    font-size: 1.1rem;
+    line-height: 0;
+    position: relative;
+    top: -1px;
+}
+
+
+/* =========================================
+   FINE STYLE.CSS
+   ========================================= */
