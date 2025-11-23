@@ -497,5 +497,178 @@ p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); }
 }
 
 /* =========================================
+   MOBILE RESPONSIVENESS (MEDIA QUERIES)
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* --- 1. LAYOUT GENERALE & SPAZIATURA --- */
+    .container {
+        padding: 20px 16px; /* Padding laterale ridotto per mobile */
+        width: 100%;
+        overflow-x: hidden; /* Previene lo scroll orizzontale della pagina */
+    }
+
+    /* Riduzione testi giganti */
+    h1 {
+        font-size: 2.2rem; /* Molto più piccolo */
+        line-height: 1.1;
+        word-wrap: break-word;
+        margin-bottom: 16px;
+    }
+
+    h2 { font-size: 1.6rem; margin-bottom: 12px; }
+    p { font-size: 1rem; line-height: 1.5; }
+    
+    /* --- 2. HERO SECTION & GRIGLIE --- */
+    /* Trasforma TUTTE le griglie in colonne singole */
+    .grid, 
+    .contact-grid-wrapper, 
+    section[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important; /* Forza una colonna */
+        gap: 40px !important;
+        text-align: center; /* Centra il testo su mobile */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Centra il contenuto della Hero */
+    section[style*="grid-template-columns"] > div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        order: 1; /* Mette il testo sopra (o sotto se preferisci order: 2) */
+    }
+    
+    /* La card visiva della Hero */
+    section[style*="grid-template-columns"] > .glass-card {
+        order: 2; /* Mette l'immagine sotto */
+        height: 280px !important; /* Meno alta */
+        width: 100%;
+    }
+
+    /* --- 3. NAVIGAZIONE (SCROLLABLE DOCK) --- */
+    .site-header {
+        /* Su mobile, impiliamo logo e nav */
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 40px;
+        width: 100%;
+        padding: 0;
+    }
+    
+    .brand-logo {
+        align-self: center;
+        font-size: 1.2rem;
+        padding: 8px 20px;
+    }
+
+    /* Menu scorrevole orizzontale */
+    nav {
+        width: 100%; /* Occupa tutta la larghezza */
+        max-width: 100%;
+        justify-content: flex-start; /* Allinea a sinistra per lo scroll */
+        overflow-x: auto; /* Abilita lo scroll */
+        padding: 4px;
+        border-radius: 16px;
+        /* Nasconde la scrollbar */
+        scrollbar-width: none; 
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    nav::-webkit-scrollbar { display: none; }
+
+    .nav-links {
+        padding: 0 10px; /* Spazio ai lati */
+        gap: 4px;
+        width: auto; /* Lascia che si espanda */
+        flex-shrink: 0;
+    }
+
+    .nav-links a {
+        white-space: nowrap; /* Testo su una riga */
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+    
+    /* Il toggle su mobile può stare dentro la nav scorrevole o fuori. 
+       Qui lo integriamo nello scroll per semplicità o lo mettiamo float */
+    .theme-toggle {
+        /* Se vuoi il toggle fisso in alto a destra: */
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px; height: 40px;
+        /* Oppure lascialo nel flusso se preferisci */
+    }
+
+
+    /* --- 4. CARDS & ELEMENTI --- */
+    .glass-card {
+        padding: 24px; /* Meno spazio interno */
+        border-radius: 20px;
+    }
+
+    /* --- 5. GITHUB TERMINAL --- */
+    .git-row {
+        grid-template-columns: 1fr; /* Una colonna: tutto impilato o semplificato */
+        gap: 4px;
+        text-align: left;
+        padding: 12px;
+    }
+    
+    /* Layout specifico per la riga git su mobile */
+    .git-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .git-hash { font-size: 0.7rem; width: 100%; margin-bottom: 4px; }
+    .git-msg { width: 100%; font-size: 0.85rem; margin-bottom: 4px; white-space: normal; }
+    .git-date { font-size: 0.7rem; opacity: 0.6; width: 100%; text-align: left; }
+
+    /* --- 6. SOCIAL & CONTACTS --- */
+    .social-container {
+        gap: 12px; 
+        justify-content: center;
+        max-width: 100%;
+    }
+    
+    .social-icon-link {
+        width: 44px; height: 44px; /* Icone touch-friendly */
+    }
+
+    .contact-grid-wrapper form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Input del form a colonna singola */
+    .contact-grid-wrapper form > div {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Footer */
+    .site-footer {
+        padding: 40px 0 20px 0;
+    }
+
+    /* --- 7. BACKGROUND ORBS (Performance) --- */
+    .orb {
+        filter: blur(40px); /* Meno blur = più performance */
+        opacity: 0.6;
+    }
+}
+
+/* Fix per schermi piccolissimi (iPhone SE, fold) */
+@media (max-width: 380px) {
+    h1 { font-size: 1.8rem; }
+    .nav-links a { padding: 6px 12px; font-size: 0.8rem; }
+}
+
+/* =========================================
               END OF STYLE.CSS
    ========================================= */
