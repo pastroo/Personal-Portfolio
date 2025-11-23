@@ -671,5 +671,148 @@ body.scrolled nav {
 
 
 /* =========================================
+   MOBILE RESPONSIVENESS (MEDIA QUERIES)
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* --- 1. LAYOUT GENERALE & SPAZIATURA --- */
+    .container {
+        padding: 40px 20px; /* Meno padding laterale */
+        width: 100%;
+        overflow-x: hidden; /* Evita scroll orizzontale indesiderato */
+    }
+
+    /* Riduzione testi giganti */
+    h1 {
+        font-size: 2.5rem; /* Da 4rem a 2.5rem */
+        line-height: 1.1;
+        word-wrap: break-word; /* Evita che parole lunghe rompano il layout */
+    }
+
+    h2 { font-size: 1.8rem; }
+    
+    /* --- 2. HERO SECTION & GRIGLIE --- */
+    /* Trasforma tutte le griglie in colonne singole */
+    .grid, 
+    .contact-grid-wrapper, 
+    section[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important; /* Forza una colonna */
+        gap: 40px !important;
+        text-align: center; /* Centra il testo su mobile */
+    }
+
+    /* Centra il contenuto della Hero */
+    section[style*="grid-template-columns"] > div:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* --- 3. NAVIGAZIONE (MOBILE APP STYLE) --- */
+    .site-header {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+
+    nav {
+        max-width: 100%;
+        padding: 4px;
+        border-radius: 20px; /* Meno rotondo su mobile per guadagnare spazio */
+        overflow: visible; /* Permette al contenuto di scorrere */
+    }
+
+    /* Rende il menu scorrevole orizzontalmente (come le storie di IG) */
+    .nav-links {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 4px;
+        width: 100%;
+        justify-content: flex-start; /* Allinea a sinistra per lo scroll */
+        -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
+        scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+    }
+    
+    /* Nasconde scrollbar su Chrome/Safari */
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links a, 
+    .theme-toggle {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        flex-shrink: 0; /* Impedisce ai bottoni di schiacciarsi */
+    }
+
+    /* Nascondi la bolla su mobile se crea problemi, o lasciala */
+    /* Su mobile spesso è meglio un highlight statico o semplificato */
+    /* .nav-liquid-cursor { display: none; } */ 
+
+
+    /* --- 4. CARDS & ELEMENTI --- */
+    .glass-card {
+        padding: 24px; /* Meno spazio interno nelle card */
+        border-radius: 24px;
+    }
+
+    /* Hero Visual (la card con l'icona Apple) */
+    /* La rendiamo più compatta */
+    .glass-card[style*="height: 350px"] {
+        height: 280px !important;
+        width: 100%;
+    }
+
+    /* --- 5. GITHUB TERMINAL --- */
+    .git-row {
+        grid-template-columns: 50px 1fr; /* Nasconde la colonna data se serve */
+        font-size: 0.8rem;
+        padding: 12px;
+    }
+    
+    .git-date {
+        display: none; /* Nascondiamo la data su schermi molto piccoli */
+    }
+    
+    .git-hash {
+        font-size: 0.75rem;
+    }
+
+    /* --- 6. SOCIAL & CONTACTS --- */
+    .social-container {
+        gap: 10px; /* Icone più vicine */
+    }
+    
+    .social-icon-link {
+        width: 42px; /* Icone leggermente più piccole */
+        height: 42px;
+    }
+
+    .contact-grid-wrapper form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Input del form a colonna singola */
+    .contact-grid-wrapper form > div {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* --- 7. BACKGROUND ORBS --- */
+    /* Riduciamo le sfere per non appesantire la GPU del telefono */
+    .orb {
+        filter: blur(50px); /* Meno blur per performance */
+    }
+    .orb-1 { width: 80vw; height: 80vw; }
+    .orb-2 { width: 90vw; height: 90vw; }
+}
+
+/* Fix per schermi piccolissimi (iPhone SE, etc) */
+@media (max-width: 380px) {
+    h1 { font-size: 2rem; }
+    .nav-links a { padding: 8px 12px; font-size: 0.8rem; }
+}
+
+
+/* =========================================
    FINE STYLE.CSS
    ========================================= */
