@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live - Riccardo Pastrone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <div class="ios-gradient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <main class="container">
+        <header class="site-header">
+            <a href="index.html" class="brand-logo">Riccardo Pastrone</a>
+            <nav>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="live.html" class="active live-menu-item">
+                        <span class="menu-live-dot"></span>Live
+                    </a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </nav>
+        </header>
+
+        <section style="text-align: center; margin-bottom: 40px;">
+            <div class="hud-data" style="justify-content: center;">
+                <div class="hud-dot red"></div>
+                <span>STREAMING_STATUS // ON_AIR</span>
+            </div>
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">Come To Say Hi!</h1>
+            <p style="max-width: 600px; margin: 0 auto 40px auto;">The Witcher 3: Wild Hunt</p>
+
+            <div class="glass-card tilt-card" style="padding: 0; overflow: hidden; border-radius: 24px; display: flex; justify-content: center; align-items: center; aspect-ratio: 16/9;">
+                
+                <iframe
+                    src="https://player.twitch.tv/?channel=codingwithpastro&parent=pastroo.github.io"
+                    height="100%"
+                    width="100%"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="https://www.twitch.tv/codingwithpastro" target="_blank" class="btn-apple tilt-card">
+                    Apri su Twitch ↗
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="copyright-pill">
+            <span>&copy;</span> 2025 Riccardo
+        </div>
+    </footer>
+
+</body>
+</html>
