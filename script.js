@@ -169,6 +169,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// --- 6. TWITCH LIVE STATUS INDICATOR ---
+    const liveLinks = document.querySelectorAll('.live-menu-item');
+    
+    // CONFIGURAZIONE MANUALE:
+    // Imposta su 'true' quando vai in live, 'false' quando sei offline.
+    const isBroadcasting = true; // <--- CAMBIA QUESTO PER TESTARE
+
+    if (isBroadcasting) {
+        liveLinks.forEach(link => {
+            link.classList.add('is-live');
+            
+            // Opzionale: Cambia il testo del tooltip o title
+            link.setAttribute('title', 'Attualmente in Live su Twitch!');
+        });
+    }
+
 /* =========================================
               END OF SCRIPT.JS
    ========================================= */

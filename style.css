@@ -624,6 +624,50 @@ p { font-size: 1.1rem; line-height: 1.6; color: var(--text-muted); }
     .brand-logo { font-size: 1.1rem; padding: 8px 20px; }
 }
 
+
+/* =========================================
+   LIVE MENU DOT & PLAYER
+   ========================================= */
+
+/* Il pallino rosso dentro il menu */
+.menu-live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #FF3B30;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    
+    /* Di base è spento (invisibile) */
+    opacity: 0; 
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+/* Quando la classe 'is-live' viene aggiunta via JS */
+.live-menu-item.is-live .menu-live-dot {
+    opacity: 1;
+    transform: scale(1);
+    animation: status-pulse-red 1.5s infinite;
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.8);
+}
+
+/* Stile speciale per il testo quando è live */
+.live-menu-item.is-live {
+    color: #FF3B30 !important;
+    font-weight: 700;
+}
+
+/* Adattamento Iframe Twitch */
+.glass-card iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+
 /* =========================================
               END OF STYLE.CSS
    ========================================= */
