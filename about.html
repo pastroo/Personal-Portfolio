@@ -11,10 +11,10 @@
     <div class="ios-gradient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
     </div>
 
     <div class="container">
+        
         <header class="site-header">
             <a href="index.html" class="brand-logo">RP.</a>
             
@@ -30,11 +30,11 @@
 
             <button class="theme-toggle" aria-label="Cambia tema">
                 <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-                    <mask class="moon" id="moon-mask">
+                    <mask class="moon" id="moon-mask-about">
                         <rect x="0" y="0" width="100%" height="100%" fill="white" />
                         <circle cx="24" cy="10" r="6" fill="black" />
                     </mask>
-                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-about)" fill="currentColor" />
                     <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                         <line x1="12" y1="1" x2="12" y2="3" />
                         <line x1="12" y1="21" x2="12" y2="23" />
@@ -49,76 +49,80 @@
             </button>
         </header>
 
-        <div class="grid" style="grid-template-columns: 1fr 1.5fr;">
-            
-            <div class="glass-card tilt-card" style="text-align: center;">
-                <div style="width: 150px; height: 150px; margin: 0 auto 24px auto; background: linear-gradient(135deg, #e0c3fc, #8ec5fc); border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                    👨‍💻
+        <main>
+            <div class="about-grid">
+                
+                <div class="glass-card" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    
+                    <div class="card-icon-wrapper" style="width: 120px; height: 120px; font-size: 3.5rem; border-radius: 50%; margin: 0 auto 24px auto;">
+                        👨‍💻
+                    </div>
+                    
+                    <h2 style="font-size: 1.8rem;">Riccardo Pastrone</h2>
+                    <p style="margin-bottom: 24px;">Full Time Computer Science Student</p>
+                    
+                    <div class="hud-data" style="justify-content: center; margin-bottom: 30px;">
+                        <span>LOC: TURIN, IT</span>
+                        <div class="hud-dot" style="background-color: #0071E3; box-shadow: none;"></div>
+                        <span>GMT+1</span>
+                    </div>
+                    
+                    <div style="width: 100%; border-top: 1px solid var(--glass-border); padding-top: 24px;">
+                        <a href="contact.html" class="btn-apple" style="width: 100%;">Contact Me</a>
+                    </div>
                 </div>
-                
-                <h2>Riccardo Pastrone</h2>
-                <p style="margin-bottom: 24px;">Full Time Computer Science Student</p>
-                
-                <div class="hud-data" style="justify-content: center;">
-                    <span>LOC: TURIN, IT</span>
-                    <div class="hud-dot"></div>
-                    <span>GMT+1</span>
-                </div>
-                
-                <div style="margin-top: 30px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;">
-                    <a href="contact.html" class="btn-apple tilt-card" style="width: 100%; font-size: 0.9rem;">Contact Me</a>
+
+                <div class="glass-card">
+                    <div class="hud-data">PROFILE</div>
+                    
+                    <h2 style="margin-top: 0;">Who Am I?</h2>
+                    <p style="margin-bottom: 40px;">
+                        I was born in Asti, made in 2001. Right now I'm a full time Computer Science student at University of Turin.
+                        I love coding smart and good-looking apps, designing sleek user interfaces and exploring new technologies.
+                        I'm also passionate about cybersecurity and Artificial Intelligence.
+                    </p>
+
+                    <h3 style="margin-bottom: 24px; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Tech Stack</h3>
+                    
+                    <div style="margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 500; font-size: 0.95rem;">
+                            <span>C Language</span>
+                            <span style="color: var(--text-muted); font-family: 'SF Mono', monospace; font-size: 0.8rem;">4 YRS</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 95%; background: var(--text-main);"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 500; font-size: 0.95rem;">
+                            <span>Java & OOP</span>
+                            <span style="color: var(--text-muted); font-family: 'SF Mono', monospace; font-size: 0.8rem;">2 YRS</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 56%; background: var(--text-main);"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 500; font-size: 0.95rem;">
+                            <span>Python</span>
+                            <span style="color: var(--text-muted); font-family: 'SF Mono', monospace; font-size: 0.8rem;">3 YRS</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 87%; background: var(--text-main);"></div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
-
-            <div class="glass-card tilt-card">
-                <div class="hud-data">PROFILE</div>
-                
-                <h2 style="margin-top: 0;">Who Am I?</h2>
-                <p style="margin-bottom: 30px;">
-                    I was born in Asti, made in 2001. Right now I'm a full time Computer Science student at University of Turin.
-                    I love coding smart and good-looking apps, designing sleek user interfaces and exploring new technologies.
-                    I'm also passionate about cybersecurity and Artificial Intelligence.
-                </p>
-
-                <h3 style="margin-bottom: 20px;">Tech Stack</h3>
-                
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
-                        <span>C Language</span>
-                        <span>EXP: 4 YRS</span>
-                    </div>
-                    <div style="height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden;">
-                        <div style="height: 100%; width: 95%; background: #007AFF; border-radius: 10px;"></div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
-                        <span>Java Language and OOP</span>
-                        <span>EXP: 2 YRS</span>
-                    </div>
-                    <div style="height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden;">
-                        <div style="height: 100%; width: 56%; background: #5856D6; border-radius: 10px;"></div>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
-                        <span>Python</span>
-                        <span>EXP: 3 YRS</span>
-                    </div>
-                    <div style="height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden;">
-                        <div style="height: 100%; width: 87%; background: #AF52DE; border-radius: 10px;"></div>
-                    </div>
-                </div>
-                
+        </main> 
+        
+        <footer class="site-footer" style="text-align: center; margin-top: 60px;">
+            <div class="hud-data" style="justify-content: center;">
+                &copy; 2026 Riccardo Pastrone
             </div>
-        </div>
-        </main> <footer class="site-footer">
-        <div class="copyright-pill">
-            <span>&copy;</span> 2025 Riccardo
-        </div>
-    </footer>
+        </footer>
     </div>
  
 <script src="script.js"></script>
