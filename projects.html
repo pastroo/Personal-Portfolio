@@ -7,67 +7,83 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
     <div class="ios-gradient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
     </div>
 
     <div class="container">
-    
-    <header class="site-header">
-        <a href="index.html" class="brand-logo">Riccardo Pastrone</a>
-    
-    <nav>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="projects.html"class="active">Projects</a>
-            <a href="live.html">Live</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-        </div>
-        </nav>
-    </header>
-
-        <div style="text-align: center; margin-bottom: 60px;">
-            <div class="hud-data" style="justify-content: center;">Archive</div>
-            <h1>My Projects</h1>
-        </div>
-
-        <div class="grid">
-            <div class="glass-card tilt-card">
-                <div style="height: 220px; background: rgba(0,0,0,0.03); border-radius: 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                    💸
+        
+        <header class="site-header">
+            <a href="index.html" class="brand-logo">RP.</a>
+            <nav>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html" class="active">Projects</a>
+                    <a href="live.html">Live</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
                 </div>
-                <div class="hud-data">...</div>
-                <h3>...</h3>
-                <p>...</p>
+            </nav>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+                <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+                    <mask class="moon" id="moon-mask-proj">
+                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                        <circle cx="24" cy="10" r="6" fill="black" />
+                    </mask>
+                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-proj)" fill="currentColor" />
+                    <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </g>
+                </svg>
+            </button>
+        </header>
+
+        <main>
+            <div style="margin-bottom: 60px;">
+                <div class="hud-data">Archive</div>
+                <h1>My Projects.</h1>
             </div>
 
-            <div class="glass-card tilt-card">
-                <div style="height: 220px; background: rgba(0,0,0,0.03); border-radius: 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                    🏡
+            <div class="grid">
+                
+                <div class="glass-card">
+                    <div class="card-icon-wrapper">💸</div>
+                    <div class="hud-data">FINANCE APP</div>
+                    <h3>Project Name</h3>
+                    <p>Breve descrizione minimalista del progetto. Spiega il problema e la soluzione in due righe.</p>
                 </div>
-                <div class="hud-data">...</div>
-                <h3>...</h3>
-                <p>...</p>
-            </div>
-            
-            <div class="glass-card tilt-card">
-                <div style="height: 220px; background: rgba(0,0,0,0.03); border-radius: 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                    ✈️
-                </div>
-                <div class="hud-data">...</div>
-                <h3>...</h3>
-                <p>...</p>
-            </div>
-        </div>
 
-        </main> <footer class="site-footer">
-        <div class="copyright-pill">
-            <span>&copy;</span> 2025 Riccardo
-        </div>
-    </footer>
+                <div class="glass-card">
+                    <div class="card-icon-wrapper">🏡</div>
+                    <div class="hud-data">SMART HOME</div>
+                    <h3>Project Name</h3>
+                    <p>Breve descrizione minimalista del progetto. Spiega il problema e la soluzione in due righe.</p>
+                </div>
+                
+                <div class="glass-card">
+                    <div class="card-icon-wrapper">✈️</div>
+                    <div class="hud-data">TRAVEL TRACKER</div>
+                    <h3>Project Name</h3>
+                    <p>Breve descrizione minimalista del progetto. Spiega il problema e la soluzione in due righe.</p>
+                </div>
+
+            </div>
+        </main> 
+        
+        <footer class="site-footer" style="margin-top: 80px; text-align: center;">
+            <div class="hud-data" style="justify-content: center;">
+                &copy; 2025 Riccardo Pastrone
+            </div>
+        </footer>
     </div>
 
 <script src="script.js"></script>
