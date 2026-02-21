@@ -79,27 +79,40 @@ nav {
     display: flex; gap: 4px; position: relative;
 }
 
+/* =================================================
+   MENU LIQUIDO (Fix illeggibilità)
+================================================= */
 .nav-links a {
-    text-decoration: none; color: var(--text-muted);
-    padding: 8px 20px; border-radius: 100px;
-    font-size: 0.9rem; font-weight: 500;
-    z-index: 2; position: relative;
+    text-decoration: none; 
+    color: var(--text-muted);
+    padding: 8px 20px; 
+    border-radius: 100px;
+    font-size: 0.9rem; 
+    font-weight: 500;
+    z-index: 2; 
+    position: relative;
     transition: color 0.3s ease;
 }
 
-/* Solo l'hover prende il colore principale */
-.nav-links a:hover { color: var(--text-main); }
+.nav-links a:hover, 
+.nav-links a.active { 
+    color: var(--text-main); /* Diventa bianco puro su scuro, nero su chiaro */
+    font-weight: 600;
+}
 
-/* L'elemento attivo inverte il colore per fare contrasto col cursore! */
-.nav-links a.active { color: var(--bg-color); font-weight: 600; }
-
-/* Cursore Liquido (Sfondo solido) */
 .nav-liquid-cursor {
-    position: absolute; top: 0; left: 0; height: 100%;
-    background: var(--text-main); /* Bianco su dark mode, nero su light mode */
-    border-radius: 100px; z-index: 1; pointer-events: none;
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%;
+    background: var(--text-main); 
+    opacity: 0.1; /* IL TRUCCO: sfondo al 10% di opacità, non solido! */
+    border-radius: 100px; 
+    z-index: 1; 
+    pointer-events: none;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.3, 1), width 0.5s cubic-bezier(0.25, 1, 0.3, 1);
 }
+[data-theme="dark"] .nav-liquid-cursor { opacity: 0.15; }
 
 /* =================================================
    TOGGLE SOLE/LUNA ANIMATO (FIXED)
