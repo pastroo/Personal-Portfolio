@@ -115,35 +115,57 @@ nav {
 [data-theme="dark"] .nav-liquid-cursor { opacity: 0.15; }
 
 /* =================================================
-   TOGGLE SOLE/LUNA ANIMATO (FIXED)
+   TOGGLE TEMA (Fix SVG esploso)
 ================================================= */
 .theme-toggle {
-    background: transparent; border: none; cursor: pointer;
+    background: transparent; 
+    border: none; 
+    cursor: pointer;
     color: var(--text-main);
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    width: 44px; 
+    height: 44px; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
     transition: background 0.3s;
 }
-.theme-toggle:hover { background: var(--glass-bg); }
+.theme-toggle:hover { 
+    background: var(--glass-bg); 
+}
 
-/* FIX: Aggiunto transform-origin: center a tutti gli elementi SVG */
+/* Evitiamo che l'SVG venga tagliato */
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    overflow: visible;
+}
+
+/* Coordinate forzate a 12px (il centro esatto del viewBox 24x24) */
 .sun-and-moon > .sun { 
+    transform-origin: 12px 12px; 
     transition: transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5); 
-    transform-origin: center; 
 }
 .sun-and-moon > .sun-beams { 
+    transform-origin: 12px 12px; 
     transition: transform 0.5s, opacity 0.5s; 
-    transform-origin: center; 
 }
 .sun-and-moon .moon > circle { 
     transition: transform 0.5s cubic-bezier(0, 0, 0, 1); 
-    transform-origin: center; 
 }
 
-/* Stato Scuro: Il Sole diventa Luna */
-[data-theme="dark"] .sun-and-moon > .sun { transform: scale(1.75); }
-[data-theme="dark"] .sun-and-moon > .sun-beams { opacity: 0; transform: rotate(-25deg) scale(0.5); }
-[data-theme="dark"] .sun-and-moon .moon > circle { transform: translateX(-7px); }
+/* Animazione Scuro */
+[data-theme="dark"] .sun-and-moon > .sun { 
+    transform: scale(1.75); 
+}
+[data-theme="dark"] .sun-and-moon > .sun-beams { 
+    opacity: 0; 
+    transform: rotate(-25deg) scale(0.5); 
+}
+[data-theme="dark"] .sun-and-moon .moon > circle { 
+    transform: translateX(-7px); 
+}
 
 /* =================================================
    TYPOGRAPHY & COMPONENTS
@@ -244,3 +266,58 @@ p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom
     line-height: 1.5;
     margin-bottom: 0;
 }
+
+/* =================================================
+   SOCIAL ICONS (Pagina Contact)
+================================================= */
+.social-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    
+    /* Effetto Vetro per i bottoni social */
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 12px var(--glass-shadow);
+    
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Blocchiamo le dimensioni enormi degli SVG */
+.social-icon-link svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+/* Animazione morbida al passaggio del mouse */
+.social-icon-link:hover {
+    color: var(--text-main);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 24px var(--glass-shadow);
+}
+
+/* Colori dei brand (opzionali per un tocco di colore al passaggio) */
+.icon-linkedin:hover { color: #0077b5; }
+.icon-instagram:hover { color: #E1306C; }
+.icon-youtube:hover { color: #FF0000; }
+.icon-twitch:hover { color: #9146FF; }
+.icon-facebook:hover { color: #1877F2; }
+.icon-discord:hover { color: #5865F2; }
+/* GitHub, X, Threads, TikTok diventano semplicemente bianco/nero (var--text-main) */
