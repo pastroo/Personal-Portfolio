@@ -3,64 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Riccardo Pastrone</title>
+    <title>In Manutenzione - Riccardo Pastrone</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden;">
 
     <div class="ios-gradient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
     </div>
 
-    <div class="container">
-        <header class="site-header">
-            <a href="index.html" class="brand-logo">RP.</a>
+    <div class="container" style="width: 100%; max-width: 600px; padding: 20px;">
+        
+        <div class="glass-card" style="text-align: center; padding: 60px 40px;">
             
-            <nav>
-                <div class="nav-links">
-                    <a href="index.html" class="active">Home</a>
-                    <a href="projects.html">Projects</a>
-                    <a href="live.html">Live</a>
-                    <a href="about.html">About</a>
-                    <a href="contact.html">Contact</a>
+            <div class="card-icon-wrapper" style="margin: 0 auto 30px auto; width: 80px; height: 80px; font-size: 2.5rem; border-radius: 24px;">
+                ✨
+            </div>
+            
+            <div class="hud-data" style="justify-content: center; margin-bottom: 20px;">
+                <div class="hud-dot" style="background-color: #FF9F0A; box-shadow: 0 0 8px rgba(255, 159, 10, 0.5);"></div>
+                <span>SYSTEM_STATUS // UPGRADING</span>
+            </div>
+            
+            <h1 style="font-size: 2.5rem; margin-bottom: 16px;">We'll be right back.</h1>
+            <p style="margin-bottom: 40px;">Sto riscrivendo l'esperienza del mio portfolio con un nuovo design "Liquid Glass". <br>Torno online a brevissimo.</p>
+            
+            <div style="border-top: 1px solid var(--glass-border); padding-top: 30px;">
+                <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 15px;">Trovami qui nel frattempo:</p>
+                
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                    <a href="https://github.com/pastroo" target="_blank" class="social-icon-link icon-github" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 7.12 9.6.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 012.5-.34c.85.01 1.7.12 2.5.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0022 12 10 10 0 0012 2z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/riccardo-pastrone/" target="_blank" class="social-icon-link icon-linkedin" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
                 </div>
-            </nav>
+            </div>
 
-            <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
-                <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-                    <mask class="moon" id="moon-mask">
-                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                        <circle cx="24" cy="10" r="6" fill="black" />
-                    </mask>
-                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
-                    <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                    </g>
-                </svg>
-            </button>
-        </header>
-
-        <main>
-            <section class="hero-section">
-                <div class="hero-content">
-                    <div class="hud-data">
-                        <div class="hud-dot"></div>
-                        <span>Available for Work</span>
-                    </div>
-                    <h1>Design <br> Meets Code.</h1>
-                    <p>Computer Science Student at University of Turin.<br> Crafting elegant digital experiences.</p>
-                    <a href="projects.html" class="btn-apple">View Projects</a>
-                </div>
-            </section>
-        </main>
+        </div>
     </div>
 
     <script src="script.js"></script>
