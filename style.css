@@ -87,20 +87,22 @@ nav {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+/* Solo l'hover prende il colore principale */
+.nav-links a:hover { color: var(--text-main); }
 
-/* Cursore Liquido */
+/* L'elemento attivo inverte il colore per fare contrasto col cursore! */
+.nav-links a.active { color: var(--bg-color); font-weight: 600; }
+
+/* Cursore Liquido (Sfondo solido) */
 .nav-liquid-cursor {
     position: absolute; top: 0; left: 0; height: 100%;
-    background: var(--text-main);
-    opacity: 0.08;
+    background: var(--text-main); /* Bianco su dark mode, nero su light mode */
     border-radius: 100px; z-index: 1; pointer-events: none;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.3, 1), width 0.5s cubic-bezier(0.25, 1, 0.3, 1);
 }
-[data-theme="dark"] .nav-liquid-cursor { opacity: 0.15; }
 
 /* =================================================
-   TOGGLE SOLE/LUNA ANIMATO
+   TOGGLE SOLE/LUNA ANIMATO (FIXED)
 ================================================= */
 .theme-toggle {
     background: transparent; border: none; cursor: pointer;
@@ -111,9 +113,19 @@ nav {
 }
 .theme-toggle:hover { background: var(--glass-bg); }
 
-.sun-and-moon > .sun { transition: transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5); }
-.sun-and-moon > .sun-beams { transition: transform 0.5s, opacity 0.5s; transform-origin: center; }
-.sun-and-moon .moon > circle { transition: transform 0.5s cubic-bezier(0, 0, 0, 1); }
+/* FIX: Aggiunto transform-origin: center a tutti gli elementi SVG */
+.sun-and-moon > .sun { 
+    transition: transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5); 
+    transform-origin: center; 
+}
+.sun-and-moon > .sun-beams { 
+    transition: transform 0.5s, opacity 0.5s; 
+    transform-origin: center; 
+}
+.sun-and-moon .moon > circle { 
+    transition: transform 0.5s cubic-bezier(0, 0, 0, 1); 
+    transform-origin: center; 
+}
 
 /* Stato Scuro: Il Sole diventa Luna */
 [data-theme="dark"] .sun-and-moon > .sun { transform: scale(1.75); }
