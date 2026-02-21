@@ -80,7 +80,7 @@ nav {
 }
 
 /* =================================================
-   MENU LIQUIDO (Fix illeggibilità)
+   MENU LIQUIDO (Fix Definitivo Inversione Colori)
 ================================================= */
 .nav-links a {
     text-decoration: none; 
@@ -91,28 +91,42 @@ nav {
     font-weight: 500;
     z-index: 2; 
     position: relative;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
-.nav-links a:hover, 
+/* 1. Nessun hover: la voce attiva prende il colore dello sfondo (es. bianco su pillola nera) */
 .nav-links a.active { 
-    color: var(--text-main); /* Diventa bianco puro su scuro, nero su chiaro */
+    color: var(--bg-color); 
     font-weight: 600;
 }
 
+/* 2. Se il mouse ENTRA nel contenitore del menu, la voce attiva torna normale 
+      (perché la pillola si sta spostando via da lei) */
+.nav-links:hover a.active {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* 3. La voce ESATTA puntata dal mouse diventa del colore dello sfondo 
+      (perché la pillola è appena arrivata lì). */
+.nav-links a:hover { 
+    color: var(--bg-color) !important; 
+    font-weight: 600;
+}
+
+/* La pillola solida che si muove */
 .nav-liquid-cursor {
     position: absolute; 
     top: 0; 
     left: 0; 
     height: 100%;
     background: var(--text-main); 
-    opacity: 0.1; /* IL TRUCCO: sfondo al 10% di opacità, non solido! */
+    opacity: 1; 
     border-radius: 100px; 
     z-index: 1; 
     pointer-events: none;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.3, 1), width 0.5s cubic-bezier(0.25, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), width 0.4s cubic-bezier(0.25, 1, 0.3, 1);
 }
-[data-theme="dark"] .nav-liquid-cursor { opacity: 0.15; }
 
 /* =================================================
    TOGGLE TEMA (Fix SVG esploso)
@@ -321,3 +335,89 @@ p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom
 .icon-facebook:hover { color: #1877F2; }
 .icon-discord:hover { color: #5865F2; }
 /* GitHub, X, Threads, TikTok diventano semplicemente bianco/nero (var--text-main) */
+
+
+/* =================================================
+   FORM CONTATTI MINIMAL & PALLINI STATO
+================================================= */
+
+/* Fix Pallino Rosso */
+.hud-dot.red { 
+    background-color: #FF3B30 !important; 
+    box-shadow: 0 0 8px rgba(255, 59, 48, 0.6) !important; 
+}
+[data-theme="dark"] .hud-dot.red { 
+    background-color: #FF453A !important; 
+    box-shadow: 0 0 8px rgba(255, 69, 58, 0.6) !important; 
+}
+
+/* Stile Campi di Testo iOS */
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(150, 150, 150, 0.08); /* Sfondo delicato in stile vetro */
+    border: 1px solid rgba(150, 150, 150, 0.2);
+    border-radius: 16px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* Effetto Focus Elegante */
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    background: rgba(150, 150, 150, 0.12);
+    border-color: var(--text-main);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* =================================================
+   FORM CONTATTI E PALLINI STATO
+================================================= */
+/* Forza il rosso fuoco sul pallino di errore/offline */
+.hud-dot.red { 
+    background-color: #FF3B30 !important; 
+    box-shadow: 0 0 8px rgba(255, 59, 48, 0.6) !important; 
+}
+[data-theme="dark"] .hud-dot.red { 
+    background-color: #FF453A !important; 
+    box-shadow: 0 0 8px rgba(255, 69, 58, 0.6) !important; 
+}
+
+/* Spaziatura e Stile Vetro per i campi del form */
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(150, 150, 150, 0.08);
+    border: 1px solid rgba(150, 150, 150, 0.2);
+    border-radius: 16px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-bottom: 16px; /* Spazio tra i campi */
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    background: rgba(150, 150, 150, 0.12);
+    border-color: var(--text-main);
+}

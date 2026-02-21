@@ -17,17 +17,38 @@
 
     <main class="container">
         <header class="site-header">
-            <a href="index.html" class="brand-logo">Riccardo Pastrone</a>
-            <nav>
-                <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="projects.html">Projects</a>
-                    <a href="live.html">Live</a>
-                    <a href="about.html">About</a>
-                    <a href="contact.html" class="active">Contact</a>
-                </div>
-            </nav>
-        </header>
+    <a href="index.html" class="brand-logo">RP.</a>
+    
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="live.html">Live</a>
+            <a href="about.html">About</a>
+            <a href="contact.html" class="active">Contact</a>
+        </div>
+    </nav>
+
+    <button class="theme-toggle" aria-label="Cambia tema">
+        <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+            <mask class="moon" id="moon-mask">
+                <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                <circle cx="24" cy="10" r="6" fill="black" />
+            </mask>
+            <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+            <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+        </svg>
+    </button>
+</header>
 
         <section style="text-align: center; margin-bottom: 60px;">
             <h1 style="font-size: 3.5rem;">Stay in contact</h1>
@@ -43,15 +64,17 @@
                 </div>
                 <h2 style="margin-bottom: 30px;">Let's Talk!</h2>
 
-                <form action="#" method="POST">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <form action="#" method="POST" style="margin-top: 24px; text-align: left;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 0;">
                         <input type="text" name="name" placeholder="Your Name" class="form-input" required>
                         <input type="email" name="email" placeholder="Your E-Mail" class="form-input" required>
                     </div>
-                    <input type="text" name="subject" placeholder="Message Object" class="form-input" required>
-                    <input type="text" name="message" placeholder="Tell me whatever you want" class="form-input" required>
                     
-                    <button type="submit" class="btn-apple tilt-card">
+                    <input type="text" name="subject" placeholder="Message Object" class="form-input" required>
+                    
+                    <textarea name="message" placeholder="Tell me whatever you want" class="form-textarea" style="min-height: 120px; resize: vertical;" required></textarea>
+                    
+                    <button type="submit" class="btn-apple" style="width: 100%; margin-top: 8px;">
                         <span>Send Message &rarr;</span>
                     </button>
                 </form>
