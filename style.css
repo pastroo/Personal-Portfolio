@@ -482,7 +482,7 @@ p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom
 }
 
 /* =================================================
-   FLIP CARDS & TRANSIZIONI (App UniTO)
+   FLIP CARDS & TRANSIZIONI (App UniTO) - FIXED
 ================================================= */
 .flip-card {
     background-color: transparent;
@@ -496,8 +496,9 @@ p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Rimbalzo iOS */
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-style: preserve-3d;
+    will-change: transform; /* Previene i glitch di rendering */
 }
 
 .flip-card.flipped .flip-card-inner {
@@ -514,17 +515,32 @@ p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    /* TRUCCO HARDWARE: Evita che il backdrop-filter faccia sparire la card */
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
 }
 
-/* Fix per mantenere l'estetica della card frontale */
 .flip-card-front {
     padding: 40px 24px;
 }
 
-/* Retro della card */
 .flip-card-back {
-    transform: rotateY(180deg);
+    /* Il retro deve combinare la rotazione con il fix hardware */
+    transform: rotateY(180deg) translate3d(0,0,0);
     padding: 24px;
+}
+
+/* --- FIX CONFLITTO HOVER --- */
+/* Disabilitiamo l'animazione di "sollevamento" sulle flip card per non rompere il 3D,
+   ma manteniamo l'ombra per non perdere l'effetto premium */
+.flip-card .flip-card-front.glass-card:hover {
+    transform: translate3d(0,0,0) !important; 
+    box-shadow: 0 8px 32px var(--glass-shadow);
+}
+.flip-card .flip-card-back.glass-card:hover {
+    transform: rotateY(180deg) translate3d(0,0,0) !important;
+    box-shadow: 0 8px 32px var(--glass-shadow);
 }
 
 /* Animazione per l'ingresso delle nuove schermate (Materie, Lab, ecc) */
