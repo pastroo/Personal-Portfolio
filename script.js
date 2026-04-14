@@ -116,129 +116,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    /* =========================================
-   5. LOGICA UNITO (Navigazione Drill-Down)
-   ========================================= */
+        /* =========================================
+        LOGICA UNITO (Navigazione Flat)
+        ========================================= */
 
-    // Livello 2: Mostra Materie
-    window.openSemester = function(anno, semestre) {
-        document.getElementById('view-years').style.display = 'none';
-        const subjView = document.getElementById('view-subjects');
-        subjView.style.display = 'grid';
-        
-        // Riavvia l'animazione
-        subjView.classList.remove('fade-in');
-        void subjView.offsetWidth; 
-        subjView.classList.add('fade-in');
+        // Helper per gestire le transizioni
+        function switchView(targetId) {
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(s => s.style.display = 'none');
+            
+            const target = document.getElementById(targetId);
+            target.style.display = (targetId === 'view-files') ? 'block' : 'grid';
+            
+            target.classList.remove('fade-in');
+            void target.offsetWidth; // Trigger reflow
+            target.classList.add('fade-in');
+        }
 
-        document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / ${anno} / ${semestre}`;
-        document.getElementById('unito-title').innerText = "Materie.";
+        // 1. Apertura Anno -> Mostra Semestri
+        window.openYear = function(anno) {
+            const semView = document.getElementById('view-semesters');
+            document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / ${anno}`;
+            document.getElementById('unito-title').innerText = anno + ".";
 
-        // Generazione dinamica delle materie
-        subjView.innerHTML = `
-            <div class="glass-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 1')" style="cursor:pointer">
-                <div class="card-icon-wrapper">📚</div>
-                <div class="hud-data">Corso</div>
-                <h3>Materia 1</h3>
-                <p>Esplora i laboratori</p>
-            </div>
-            <div class="glass-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 2')" style="cursor:pointer">
-                <div class="card-icon-wrapper">💻</div>
-                <div class="hud-data">Corso</div>
-                <h3>Materia 2</h3>
-                <p>Esplora i laboratori</p>
-            </div>
-            <div class="glass-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 3')" style="cursor:pointer">
-                <div class="card-icon-wrapper">📊</div>
-                <div class="hud-data">Corso</div>
-                <h3>Materia 3</h3>
-                <p>Esplora i laboratori</p>
-            </div>
-        `;
-    };
-
-    // Livello 3: Mostra Laboratori
-    window.openSubject = function(anno, semestre, materia) {
-        document.getElementById('view-subjects').style.display = 'none';
-        document.getElementById('view-files').style.display = 'none'; // Se torniamo indietro
-        const labsView = document.getElementById('view-labs');
-        labsView.style.display = 'grid';
-        
-        labsView.classList.remove('fade-in');
-        void labsView.offsetWidth;
-        labsView.classList.add('fade-in');
-
-        document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / <span style="cursor:pointer" onclick="openSemester('${anno}', '${semestre}')">${semestre}</span> / ${materia}`;
-        document.getElementById('unito-title').innerText = "Laboratori.";
-
-        // Generazione dinamica dei laboratori
-        labsView.innerHTML = `
-            <div class="glass-card" onclick="openLab('${anno}', '${semestre}', '${materia}', 'Laboratorio 1')" style="cursor:pointer">
-                <div class="card-icon-wrapper">📁</div>
-                <div class="hud-data">Directory</div>
-                <h3>Laboratorio 1</h3>
-                <p>File ed esercizi</p>
-            </div>
-            <div class="glass-card" onclick="openLab('${anno}', '${semestre}', '${materia}', 'Laboratorio 2')" style="cursor:pointer">
-                <div class="card-icon-wrapper">📁</div>
-                <div class="hud-data">Directory</div>
-                <h3>Laboratorio 2</h3>
-                <p>File ed esercizi</p>
-            </div>
-        `;
-    };
-
-    // Livello 4: Mostra File
-    window.openLab = function(anno, semestre, materia, lab) {
-        document.getElementById('view-labs').style.display = 'none';
-        const filesView = document.getElementById('view-files');
-        filesView.style.display = 'block'; // Block, non grid, per la lista
-        
-        filesView.classList.remove('fade-in');
-        void filesView.offsetWidth;
-        filesView.classList.add('fade-in');
-
-        document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / ... / <span style="cursor:pointer" onclick="openSubject('${anno}', '${semestre}', '${materia}')">${materia}</span> / ${lab}`;
-        document.getElementById('unito-title').innerText = "File del Laboratorio.";
-
-        // Sfruttiamo le tue classi git-row-minimal per fare la lista dei file!
-        filesView.innerHTML = `
-            <div class="glass-card">
-                <a href="#" class="git-row-minimal">
-                    <div class="git-hash">📄</div>
-                    <div class="git-msg">main.cpp</div>
-                    <div class="git-date">12 KB</div>
-                </a>
-                <a href="#" class="git-row-minimal">
-                    <div class="git-hash">📄</div>
-                    <div class="git-msg">strutture.h</div>
-                    <div class="git-date">4 KB</div>
-                </a>
-                <a href="#" class="git-row-minimal">
-                    <div class="git-hash">📝</div>
-                    <div class="git-msg">Appunti_Lezione.pdf</div>
-                    <div class="git-date">1.2 MB</div>
-                </a>
-                <div style="margin-top: 30px; text-align: center;">
-                    <button class="btn-apple" onclick="openSubject('${anno}', '${semestre}', '${materia}')">Torna ai Laboratori</button>
+            semView.innerHTML = `
+                <div class="glass-card" onclick="openSemester('${anno}', 'Primo Semestre')">
+                    <div class="card-icon-wrapper">1️⃣</div>
+                    <div class="hud-data">Periodo</div>
+                    <h3>Primo Semestre</h3>
+                    <p>Visualizza le materie</p>
                 </div>
-            </div>
-        `;
-    };
+                <div class="glass-card" onclick="openSemester('${anno}', 'Secondo Semestre')">
+                    <div class="card-icon-wrapper">2️⃣</div>
+                    <div class="hud-data">Periodo</div>
+                    <h3>Secondo Semestre</h3>
+                    <p>Visualizza le materie</p>
+                </div>
+            `;
+            switchView('view-semesters');
+        };
 
-    // Reset: Torna alla schermata principale (Anni)
-    window.resetUniToView = function() {
-        document.getElementById('view-years').style.display = 'grid';
-        document.getElementById('view-subjects').style.display = 'none';
-        document.getElementById('view-labs').style.display = 'none';
-        document.getElementById('view-files').style.display = 'none';
-        
-        document.getElementById('unito-breadcrumb').innerHTML = "Archivio";
-        document.getElementById('unito-title').innerText = "UniTO.";
-        
-        // Richiude tutte le card che erano state girate
-        document.querySelectorAll('.flip-card').forEach(card => card.classList.remove('flipped'));
-    };
+        // 2. Apertura Semestre -> Mostra Materie
+        window.openSemester = function(anno, semestre) {
+            const subjView = document.getElementById('view-subjects');
+            document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / <span onclick="openYear('${anno}')">${anno}</span> / ${semestre}`;
+            document.getElementById('unito-title').innerText = "Materie.";
+
+            subjView.innerHTML = `
+                <div class="glass-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 1')">
+                    <div class="card-icon-wrapper">📚</div>
+                    <div class="hud-data">Corso</div>
+                    <h3>Materia 1</h3>
+                    <p>Esplora i laboratori</p>
+                </div>
+                <div class="glass-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 2')">
+                    <div class="card-icon-wrapper">💻</div>
+                    <div class="hud-data">Corso</div>
+                    <h3>Materia 2</h3>
+                    <p>Esplora i laboratori</p>
+                </div>
+            `;
+            switchView('view-subjects');
+        };
+
+        // 3. Apertura Materia -> Mostra Laboratori
+        window.openSubject = function(anno, semestre, materia) {
+            const labsView = document.getElementById('view-labs');
+            document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="openYear('${anno}')">${anno}</span> / <span onclick="openSemester('${anno}','${semestre}')">${semestre}</span> / ${materia}`;
+            document.getElementById('unito-title').innerText = "Laboratori.";
+
+            labsView.innerHTML = `
+                <div class="glass-card" onclick="openLab('${anno}', '${semestre}', '${materia}', 'Laboratorio 1')">
+                    <div class="card-icon-wrapper">📁</div>
+                    <div class="hud-data">Directory</div>
+                    <h3>Laboratorio 1</h3>
+                    <p>File ed esercizi</p>
+                </div>
+            `;
+            switchView('view-labs');
+        };
+
+        // 4. Apertura Laboratorio -> Mostra File
+        window.openLab = function(anno, semestre, materia, lab) {
+            const filesView = document.getElementById('view-files');
+            document.getElementById('unito-breadcrumb').innerHTML = `... / <span onclick="openSubject('${anno}','${semestre}','${materia}')">${materia}</span> / ${lab}`;
+            document.getElementById('unito-title').innerText = "File.";
+
+            filesView.innerHTML = `
+                <div class="glass-card">
+                    <a href="#" class="git-row-minimal"><div class="git-hash">📄</div><div class="git-msg">esercizio_1.c</div><div class="git-date">2 KB</div></a>
+                    <a href="#" class="git-row-minimal"><div class="git-hash">📄</div><div class="git-msg">README.md</div><div class="git-date">1 KB</div></a>
+                </div>
+            `;
+            switchView('view-files');
+        };
+
+        // Reset Totale
+        window.resetUniToView = function() {
+            switchView('view-years');
+            document.getElementById('unito-breadcrumb').innerText = "Archivio";
+            document.getElementById('unito-title').innerText = "UniTO.";
+        };
 
 });
 
