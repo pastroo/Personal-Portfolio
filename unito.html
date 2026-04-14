@@ -49,70 +49,40 @@
         </header>
 
         <main id="unito-app">
-            <div style="margin-bottom: 60px;">
-                <div id="unito-breadcrumb" class="hud-data" style="cursor:pointer;" onclick="resetUniToView()">Archivio</div>
-                <h1 id="unito-title">UniTO.</h1>
-            </div>
+    <div style="margin-bottom: 60px;">
+        <div id="unito-breadcrumb" class="hud-data" style="cursor:pointer;" onclick="resetUniToView()">UniTO</div>
+        <h1 id="unito-title">UniTO.</h1>
+    </div>
 
-            <div id="view-years" class="grid view-section">
-                
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front glass-card">
-                            <div class="card-icon-wrapper">🎓</div>
-                            <div class="hud-data">Informatica</div>
-                            <h3>Primo Anno</h3>
-                            <p>Clicca per mostrare i semestri</p>
-                        </div>
-                        <div class="flip-card-back glass-card">
-                            <h3 style="margin-bottom: 24px;">Scegli il Semestre</h3>
-                            <button class="btn-apple" onclick="event.stopPropagation(); openSemester('Primo Anno', 'Primo Semestre')">1° Semestre</button>
-                            <button class="btn-apple" style="margin-top: 12px;" onclick="event.stopPropagation(); openSemester('Primo Anno', 'Secondo Semestre')">2° Semestre</button>
-                        </div>
-                    </div>
-                </div>
+    <div id="view-years" class="grid view-section">
+        <div class="glass-card" onclick="openYear('Primo Anno')">
+            <div class="card-icon-wrapper">🎓</div>
+            <div class="hud-data">Informatica</div>
+            <h3>Primo Anno</h3>
+            <p>Seleziona per vedere i semestri</p>
+        </div>
+        <div class="glass-card" onclick="openYear('Secondo Anno')">
+            <div class="card-icon-wrapper">💻</div>
+            <div class="hud-data">Informatica</div>
+            <h3>Secondo Anno</h3>
+            <p>Seleziona per vedere i semestri</p>
+        </div>
+        <div class="glass-card" onclick="openYear('Terzo Anno')">
+            <div class="card-icon-wrapper">🚀</div>
+            <div class="hud-data">Informatica</div>
+            <h3>Terzo Anno</h3>
+            <p>Seleziona per vedere i semestri</p>
+        </div>
+    </div>
 
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front glass-card">
-                            <div class="card-icon-wrapper">💻</div>
-                            <div class="hud-data">Informatica</div>
-                            <h3>Secondo Anno</h3>
-                            <p>Clicca per mostrare i semestri</p>
-                        </div>
-                        <div class="flip-card-back glass-card">
-                            <h3 style="margin-bottom: 24px;">Scegli il Semestre</h3>
-                            <button class="btn-apple" onclick="event.stopPropagation(); openSemester('Secondo Anno', 'Primo Semestre')">1° Semestre</button>
-                            <button class="btn-apple" style="margin-top: 12px;" onclick="event.stopPropagation(); openSemester('Secondo Anno', 'Secondo Semestre')">2° Semestre</button>
-                        </div>
-                    </div>
-                </div>
+    <div id="view-semesters" class="grid view-section" style="display: none;"></div>
 
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front glass-card">
-                            <div class="card-icon-wrapper">🚀</div>
-                            <div class="hud-data">Informatica</div>
-                            <h3>Terzo Anno</h3>
-                            <p>Clicca per mostrare i semestri</p>
-                        </div>
-                        <div class="flip-card-back glass-card">
-                            <h3 style="margin-bottom: 24px;">Scegli il Semestre</h3>
-                            <button class="btn-apple" onclick="event.stopPropagation(); openSemester('Terzo Anno', 'Primo Semestre')">1° Semestre</button>
-                            <button class="btn-apple" style="margin-top: 12px;" onclick="event.stopPropagation(); openSemester('Terzo Anno', 'Secondo Semestre')">2° Semestre</button>
-                        </div>
-                    </div>
-                </div>
+    <div id="view-subjects" class="grid view-section" style="display: none;"></div>
 
-            </div>
+    <div id="view-labs" class="grid view-section" style="display: none;"></div>
 
-            <div id="view-subjects" class="grid view-section" style="display: none;"></div>
-
-            <div id="view-labs" class="grid view-section" style="display: none;"></div>
-
-            <div id="view-files" class="view-section" style="display: none;"></div>
-
-        </main> 
+    <div id="view-files" class="view-section" style="display: none;"></div>
+</main> 
         
         <footer class="site-footer" style="text-align: center; margin-top: 100px;">
             <div class="hud-data" style="justify-content: center;">
