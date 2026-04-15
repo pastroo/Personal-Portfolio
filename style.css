@@ -341,3 +341,37 @@ p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; font-weight: 
         opacity: 0;
     }
 }
+
+/* =================================================
+   SOCIAL ICONS RECOVERY (FIX COMPATIBILITÀ)
+================================================= */
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; /* Dimensione fissa bottone */
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 12px var(--glass-shadow);
+    color: var(--text-main); /* Colore forzato */
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.social-icon-link svg {
+    width: 20px; /* Dimensione fissa icona */
+    height: 20px;
+    fill: currentColor; /* Prende il colore da .social-icon-link */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.social-icon-link:hover {
+    color: var(--accent);
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 12px 24px var(--glass-shadow);
+}
