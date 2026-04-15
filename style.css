@@ -267,6 +267,10 @@ p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; font-weight: 
     text-overflow: ellipsis;
     padding-right: 15px;
     color: var(--text-main);
+    
+    /* FIX */
+    min-width: 0;
+    display: block;
 }
 
 .git-time {
