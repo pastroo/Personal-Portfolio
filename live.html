@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live - Riccardo Pastrone</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
 
@@ -15,7 +14,7 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <main class="container">
+    <div class="container">
         <header class="site-header">
             <a href="index.html" class="brand-logo">RP.</a>
             
@@ -31,58 +30,55 @@
 
             <button class="theme-toggle" aria-label="Cambia tema">
                 <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-                    <mask class="moon" id="moon-mask">
+                    <mask class="moon" id="moon-mask-live">
                         <rect x="0" y="0" width="100%" height="100%" fill="white" />
                         <circle cx="24" cy="10" r="6" fill="black" />
                     </mask>
-                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
-                    <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                    </g>
+                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-live)" fill="currentColor" />
                 </svg>
             </button>
         </header>
 
         <section style="text-align: center; margin-bottom: 40px;">
             <div class="hud-data" style="justify-content: center;">
-                <div class="hud-dot red"></div>
+                <div class="hud-dot" style="background: #FF3B30; box-shadow: 0 0 12px rgba(255, 59, 48, 0.8);"></div>
                 <span>STREAMING_STATUS</span>
             </div>
-            <h1 style="font-size: 3rem; margin-bottom: 10px;">Come To Say Hi!</h1>
-            <p style="max-width: 600px; margin: 0 auto 40px auto;">Hit the follow button!</p>
+            <h1>Come To Say Hi!</h1>
+            <p>Hit the follow button!</p>
+        </section>
 
-            <div class="glass-card tilt-card" style="padding: 0; overflow: hidden; border-radius: 24px; display: flex; justify-content: center; align-items: center; aspect-ratio: 16/9;">
-                
+        <main class="bento-grid">
+            
+            <div class="bento-card span-4" style="padding: 0; overflow: hidden; aspect-ratio: 16/9; display: flex; justify-content: center; align-items: center;">
                 <iframe
                     src="https://player.twitch.tv/?channel=codingwithpastro&parent=pastroo.github.io"
                     height="100%"
                     width="100%"
+                    style="border: none; border-radius: inherit;"
                     allowfullscreen>
                 </iframe>
-
             </div>
-            
-            <div style="margin-top: 30px;">
-                <a href="https://www.twitch.tv/codingwithpastro" target="_blank" class="btn-apple tilt-card">
+
+            <div class="bento-card span-4" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h3 class="card-title" style="margin-bottom: 4px; font-size: 1.4rem;">Guarda direttamente sull'app</h3>
+                    <p style="margin: 0; font-size: 0.95rem;">Supporta il canale partecipando alla chat su Twitch.</p>
+                </div>
+                <a href="https://www.twitch.tv/codingwithpastro" target="_blank" class="btn-apple" style="margin: 0; background: #9146FF; color: white;">
                     Apri su Twitch ↗
                 </a>
             </div>
-        </section>
 
-    </main>
+        </main>
 
-    <footer class="site-footer" style="text-align: center;">
-            <div class="hud-data" style="justify-content: center;">
+        <footer class="site-footer" style="text-align: center; margin-top: 60px;">
+            <div class="hud-data" style="justify-content: center; background: transparent;">
                 &copy; 2026 Riccardo Pastrone
             </div>
         </footer>
+    </div>
 
+    <script src="script.js"></script>
 </body>
 </html>

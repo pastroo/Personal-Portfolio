@@ -15,7 +15,6 @@
     </div>
 
     <div class="container">
-        
         <header class="site-header">
             <a href="index.html" class="brand-logo">RP.</a>
             <nav>
@@ -27,67 +26,49 @@
                     <a href="contact.html">Contact</a>
                 </div>
             </nav>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema">
+            <button class="theme-toggle" aria-label="Cambia tema">
                 <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
                     <mask class="moon" id="moon-mask-proj">
                         <rect x="0" y="0" width="100%" height="100%" fill="white" />
                         <circle cx="24" cy="10" r="6" fill="black" />
                     </mask>
                     <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-proj)" fill="currentColor" />
-                    <g class="sun-beams" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                    </g>
                 </svg>
             </button>
         </header>
 
-<main id="unito-app">
-    <div style="margin-bottom: 60px;">
-        <div id="unito-breadcrumb" class="hud-data" style="cursor:pointer;" onclick="resetUniToView()">Archivio</div>
-        <h1 id="unito-title">UniTO.</h1>
-    </div>
-
-    <div id="view-years" class="grid view-section">
-        <div class="glass-card" onclick="openYear('Primo Anno')">
-            <div class="card-icon-wrapper">🎓</div>
-            <div class="hud-data">Informatica</div>
-            <h3>Primo Anno</h3>
-            <p>Seleziona per vedere i semestri</p>
-        </div>
-        <div class="glass-card" onclick="openYear('Secondo Anno')">
-            <div class="card-icon-wrapper">💻</div>
-            <div class="hud-data">Informatica</div>
-            <h3>Secondo Anno</h3>
-            <p>Seleziona per vedere i semestri</p>
-        </div>
-        <div class="glass-card" onclick="openYear('Terzo Anno')">
-            <div class="card-icon-wrapper">🚀</div>
-            <div class="hud-data">Informatica</div>
-            <h3>Terzo Anno</h3>
-            <p>Seleziona per vedere i semestri</p>
-        </div>
-    </div>
-
-    <div id="view-semesters" class="grid view-section" style="display: none;"></div>
-    <div id="view-subjects" class="grid view-section" style="display: none;"></div>
-    <div id="view-labs" class="grid view-section" style="display: none;"></div>
-    <div id="view-files" class="view-section" style="display: none;"></div>
-</main> 
-        
-        <footer class="site-footer" style="text-align: center; margin-top: 100px;">
-            <div class="hud-data" style="justify-content: center;">
-                &copy; 2026 Riccardo Pastrone
+        <main id="unito-app">
+            <div style="margin-bottom: 60px;">
+                <div id="unito-breadcrumb" class="hud-data" style="cursor:pointer;" onclick="resetUniToView()">Archivio</div>
+                <h1 id="unito-title">UniTO.</h1>
             </div>
-        </footer>
-    </div>
 
-<script src="script.js"></script>
+            <div id="view-years" class="bento-grid view-section">
+                <div class="bento-card" onclick="openYear('Primo Anno')">
+                    <div class="card-icon-wrapper">🎓</div>
+                    <div class="hud-data">Informatica</div>
+                    <h3 class="card-title">Primo Anno</h3>
+                    <p>Seleziona per vedere i semestri</p>
+                </div>
+                <div class="bento-card" onclick="openYear('Secondo Anno')">
+                    <div class="card-icon-wrapper">💻</div>
+                    <div class="hud-data">Informatica</div>
+                    <h3 class="card-title">Secondo Anno</h3>
+                    <p>Seleziona per vedere i semestri</p>
+                </div>
+                <div class="bento-card" onclick="openYear('Terzo Anno')">
+                    <div class="card-icon-wrapper">🚀</div>
+                    <div class="hud-data">Informatica</div>
+                    <h3 class="card-title">Terzo Anno</h3>
+                    <p>Seleziona per vedere i semestri</p>
+                </div>
+            </div>
+
+            <div id="view-semesters" class="bento-grid view-section" style="display: none;"></div>
+            <div id="view-subjects" class="bento-grid view-section" style="display: none;"></div>
+            <div id="view-labs" class="bento-grid view-section" style="display: none;"></div>
+            <div id="view-files" class="view-section" style="display: none;"></div>
+        </main> 
+    </div>
 </body>
 </html>

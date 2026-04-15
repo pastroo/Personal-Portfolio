@@ -1,17 +1,19 @@
 :root {
-    /* Tema Chiaro */
-    --bg-color: #F5F5F7;
+    /* Tema Chiaro - Stile iOS/visionOS */
+    --bg-color: #F2F2F7; /* Grigio di base Apple */
     --text-main: #1D1D1F;
     --text-muted: #86868B;
     --accent: #0071E3;
     
-    /* Liquid Glass Variables */
-    --glass-bg: rgba(255, 255, 255, 0.5); 
-    --glass-border: rgba(255, 255, 255, 0.8);
-    --glass-shadow: rgba(0, 0, 0, 0.04);
+    /* Ultra Glass / Spatial Computing Variables */
+    --glass-bg: rgba(255, 255, 255, 0.4); 
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-highlight: rgba(255, 255, 255, 0.8);
+    --glass-shadow: rgba(0, 0, 0, 0.08);
     
-    --orb-1: rgba(0, 113, 227, 0.15);
-    --orb-2: rgba(217, 72, 203, 0.1);
+    --orb-1: rgba(0, 113, 227, 0.3);
+    --orb-2: rgba(217, 72, 203, 0.2);
+    --orb-3: rgba(52, 199, 89, 0.2);
 }
 
 [data-theme="dark"] {
@@ -20,12 +22,14 @@
     --text-main: #F5F5F7;
     --text-muted: #86868B;
     
-    --glass-bg: rgba(28, 28, 30, 0.5);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --glass-bg: rgba(30, 30, 30, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-highlight: rgba(255, 255, 255, 0.05);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
     
-    --orb-1: rgba(0, 113, 227, 0.2);
-    --orb-2: rgba(94, 42, 132, 0.2);
+    --orb-1: rgba(10, 132, 255, 0.25);
+    --orb-2: rgba(191, 90, 242, 0.2);
+    --orb-3: rgba(48, 209, 88, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,482 +37,148 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
 }
 
-/* Sfondo fluido morbido (meno invasivo) */
-.ios-gradient-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-.orb { position: absolute; border-radius: 50%; filter: blur(120px); }
-.orb-1 { top: -20%; left: -10%; width: 70vw; height: 70vw; background: var(--orb-1); }
-.orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--orb-2); }
+/* Ambient Orbs (iOS Wallpaper Style) */
+.ios-gradient-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg-color); }
+.orb { position: absolute; border-radius: 50%; filter: blur(140px); mix-blend-mode: normal; animation: float 20s infinite ease-in-out alternate; }
+.orb-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: var(--orb-1); }
+.orb-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: var(--orb-2); animation-delay: -5s; }
+.orb-3 { top: 40%; left: 50%; width: 40vw; height: 40vw; background: var(--orb-3); animation-delay: -10s; }
 
-.container { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 10%) scale(1.1); }
+}
 
-/* =================================================
-   HEADER & LIQUID GLASS NAV
-================================================= */
+.container { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
+
+/* Dynamic Island / Nav Bar */
 .site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 100px;
-    position: relative;
-    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 80px; position: sticky; top: 20px; z-index: 100;
 }
 
-.brand-logo {
-    font-size: 1.2rem; font-weight: 700; color: var(--text-main); text-decoration: none;
-    letter-spacing: -0.03em;
-}
+.brand-logo { font-size: 1.4rem; font-weight: 700; color: var(--text-main); text-decoration: none; letter-spacing: -0.04em; }
 
 nav {
-    position: relative;
     background: var(--glass-bg);
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    backdrop-filter: blur(60px) saturate(200%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: 100px;
-    padding: 6px;
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    padding: 8px;
+    box-shadow: 0 16px 40px var(--glass-shadow);
 }
 
-.nav-links {
-    display: flex; gap: 4px; position: relative;
-}
+.nav-links { display: flex; gap: 4px; position: relative; }
+.nav-links a { text-decoration: none; color: var(--text-muted); padding: 10px 24px; border-radius: 100px; font-size: 0.95rem; font-weight: 500; z-index: 2; position: relative; transition: color 0.3s ease; }
+.nav-links a.active { color: var(--bg-color); font-weight: 600; }
+.nav-links:hover a.active { color: var(--text-muted); font-weight: 500; }
+.nav-links a:hover { color: var(--bg-color) !important; font-weight: 600; }
 
-/* =================================================
-   MENU LIQUIDO (Fix Definitivo Inversione Colori)
-================================================= */
-.nav-links a {
-    text-decoration: none; 
-    color: var(--text-muted);
-    padding: 8px 20px; 
-    border-radius: 100px;
-    font-size: 0.9rem; 
-    font-weight: 500;
-    z-index: 2; 
-    position: relative;
-    transition: color 0.3s ease, font-weight 0.3s ease;
-}
-
-/* 1. Nessun hover: la voce attiva prende il colore dello sfondo (es. bianco su pillola nera) */
-.nav-links a.active { 
-    color: var(--bg-color); 
-    font-weight: 600;
-}
-
-/* 2. Se il mouse ENTRA nel contenitore del menu, la voce attiva torna normale 
-      (perché la pillola si sta spostando via da lei) */
-.nav-links:hover a.active {
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-/* 3. La voce ESATTA puntata dal mouse diventa del colore dello sfondo 
-      (perché la pillola è appena arrivata lì). */
-.nav-links a:hover { 
-    color: var(--bg-color) !important; 
-    font-weight: 600;
-}
-
-/* La pillola solida che si muove */
 .nav-liquid-cursor {
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    height: 100%;
-    background: var(--text-main); 
-    opacity: 1; 
-    border-radius: 100px; 
-    z-index: 1; 
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; height: 100%;
+    background: var(--text-main); border-radius: 100px; z-index: 1; pointer-events: none;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), width 0.4s cubic-bezier(0.25, 1, 0.3, 1);
 }
 
-/* =================================================
-   TOGGLE TEMA (Fix SVG esploso)
-================================================= */
-.theme-toggle {
-    background: transparent; 
-    border: none; 
-    cursor: pointer;
-    color: var(--text-main);
-    width: 44px; 
-    height: 44px; 
-    border-radius: 50%;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    transition: background 0.3s;
-}
-.theme-toggle:hover { 
-    background: var(--glass-bg); 
+/* Theme Toggle */
+.theme-toggle { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(20px); cursor: pointer; color: var(--text-main); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; box-shadow: 0 8px 24px var(--glass-shadow); }
+.theme-toggle:hover { transform: scale(1.05); }
+.theme-toggle svg { width: 22px; height: 22px; display: block; overflow: visible; }
+.sun-and-moon > .sun { transform-origin: 12px 12px; transition: transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5); }
+.sun-and-moon > .sun-beams { transform-origin: 12px 12px; transition: transform 0.5s, opacity 0.5s; }
+.sun-and-moon .moon > circle { transition: transform 0.5s cubic-bezier(0, 0, 0, 1); }
+[data-theme="dark"] .sun-and-moon > .sun { transform: scale(1.75); }
+[data-theme="dark"] .sun-and-moon > .sun-beams { opacity: 0; transform: rotate(-25deg) scale(0.5); }
+[data-theme="dark"] .sun-and-moon .moon > circle { transform: translateX(-7px); }
+
+/* Typography */
+h1 { font-size: 4.5rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; font-weight: 400; }
+
+/* BENTO BOX GRID SYSTEM (Apple 2026 Style) */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(200px, auto);
+    gap: 24px;
+    margin-bottom: 80px;
 }
 
-/* Evitiamo che l'SVG venga tagliato */
-.theme-toggle svg {
-    width: 24px;
-    height: 24px;
-    display: block;
-    overflow: visible;
-}
-
-/* Coordinate forzate a 12px (il centro esatto del viewBox 24x24) */
-.sun-and-moon > .sun { 
-    transform-origin: 12px 12px; 
-    transition: transform 0.5s cubic-bezier(0.5, -0.5, 0.5, 1.5); 
-}
-.sun-and-moon > .sun-beams { 
-    transform-origin: 12px 12px; 
-    transition: transform 0.5s, opacity 0.5s; 
-}
-.sun-and-moon .moon > circle { 
-    transition: transform 0.5s cubic-bezier(0, 0, 0, 1); 
-}
-
-/* Animazione Scuro */
-[data-theme="dark"] .sun-and-moon > .sun { 
-    transform: scale(1.75); 
-}
-[data-theme="dark"] .sun-and-moon > .sun-beams { 
-    opacity: 0; 
-    transform: rotate(-25deg) scale(0.5); 
-}
-[data-theme="dark"] .sun-and-moon .moon > circle { 
-    transform: translateX(-7px); 
-}
-
-/* =================================================
-   TYPOGRAPHY & COMPONENTS
-================================================= */
-h1 { font-size: 4.5rem; font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 24px; }
-p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 40px; font-weight: 400; }
-
-.btn-apple {
-    display: inline-block; padding: 14px 28px;
-    background: var(--text-main); color: var(--bg-color);
-    text-decoration: none; border-radius: 100px; font-size: 0.95rem; font-weight: 500;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s;
-}
-.btn-apple:hover { transform: scale(1.03); opacity: 0.9; }
-
-.hud-data { font-family: "SF Mono", monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; color: var(--text-muted); }
-.hud-dot { width: 8px; height: 8px; background: #34C759; border-radius: 50%; box-shadow: 0 0 8px rgba(52, 199, 89, 0.5); }
-
-/* Responsive Base */
-@media (max-width: 768px) {
-    h1 { font-size: 3rem; }
-    .site-header { flex-direction: column; gap: 24px; }
-    .theme-toggle { position: absolute; top: 0; right: 0; }
-    .nav-links { overflow-x: auto; padding: 4px; }
-    .nav-links a { font-size: 0.85rem; padding: 8px 16px; white-space: nowrap; }
-}
-
-/* =================================================
-   LIQUID GLASS CARDS (Minimal iOS 26 Style)
-================================================= */
-.glass-card {
+/* Spatial Glass Cards */
+.bento-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    backdrop-filter: blur(80px) saturate(200%);
+    -webkit-backdrop-filter: blur(80px) saturate(200%);
     border: 1px solid var(--glass-border);
-    border-radius: 32px; /* Raggio leggermente più morbido e moderno */
-    padding: 40px;
+    border-radius: 40px; /* Arrotondamento estremo iOS */
+    padding: 32px;
     position: relative;
-    box-shadow: 0 8px 32px var(--glass-shadow);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-                border-color 0.3s ease;
+    box-shadow: 0 16px 40px var(--glass-shadow);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
     overflow: hidden;
-}
-
-/* Sottile luce interna (Inner Glow) tipica del design Apple */
-.glass-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    pointer-events: none;
-    z-index: 10;
-}
-
-[data-theme="dark"] .glass-card::before {
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
-}
-
-/* Effetto Hover Elegante: si solleva leggermente, niente distorsioni 3D */
-.glass-card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 24px 64px var(--glass-shadow);
-    border-color: rgba(150, 150, 150, 0.2);
-}
-
-/* Griglia per i progetti */
-.grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 24px; 
-}
-
-/* Stile per le icone interne alle card */
-.card-icon-wrapper {
-    width: 64px; 
-    height: 64px; 
-    border-radius: 20px; 
-    background: rgba(150, 150, 150, 0.1); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 1.8rem;
-    margin-bottom: 24px;
-    border: 1px solid rgba(150, 150, 150, 0.1);
-}
-
-.glass-card h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-}
-
-.glass-card p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 0;
-}
-
-/* =================================================
-   SOCIAL ICONS (Pagina Contact)
-================================================= */
-.social-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 30px;
+    flex-direction: column;
 }
 
-.social-icon-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    
-    /* Effetto Vetro per i bottoni social */
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 12px var(--glass-shadow);
-    
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+.bento-card::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    box-shadow: inset 0 2px 2px var(--glass-highlight); pointer-events: none; z-index: 10;
 }
 
-/* Blocchiamo le dimensioni enormi degli SVG */
-.social-icon-link svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-    transition: transform 0.3s ease;
+.bento-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 32px 80px var(--glass-shadow);
 }
 
-/* Animazione morbida al passaggio del mouse */
-.social-icon-link:hover {
-    color: var(--text-main);
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 12px 24px var(--glass-shadow);
+/* Dimensionamenti Bento */
+.span-2 { grid-column: span 2; }
+.span-4 { grid-column: span 4; }
+.row-span-2 { grid-row: span 2; }
+
+@media (max-width: 900px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .span-4 { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .span-2, .span-4 { grid-column: span 1; }
 }
 
-/* Colori dei brand (opzionali per un tocco di colore al passaggio) */
-.icon-linkedin:hover { color: #0077b5; }
-.icon-instagram:hover { color: #E1306C; }
-.icon-youtube:hover { color: #FF0000; }
-.icon-twitch:hover { color: #9146FF; }
-.icon-facebook:hover { color: #1877F2; }
-.icon-discord:hover { color: #5865F2; }
-/* GitHub, X, Threads, TikTok diventano semplicemente bianco/nero (var--text-main) */
-
-
-/* =================================================
-   FORM CONTATTI MINIMAL & PALLINI STATO
-================================================= */
-
-/* Fix Pallino Rosso */
-.hud-dot.red { 
-    background-color: #FF3B30 !important; 
-    box-shadow: 0 0 8px rgba(255, 59, 48, 0.6) !important; 
+/* UI Elements */
+.btn-apple {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 16px 32px; background: var(--text-main); color: var(--bg-color);
+    text-decoration: none; border-radius: 100px; font-size: 1rem; font-weight: 600;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s;
+    border: none; cursor: pointer; margin-top: auto;
 }
-[data-theme="dark"] .hud-dot.red { 
-    background-color: #FF453A !important; 
-    box-shadow: 0 0 8px rgba(255, 69, 58, 0.6) !important; 
-}
+.btn-apple:hover { transform: scale(1.04); opacity: 0.9; }
 
-/* Stile Campi di Testo iOS */
-.form-input, .form-textarea {
-    width: 100%;
-    padding: 16px 20px;
-    background: rgba(150, 150, 150, 0.08); /* Sfondo delicato in stile vetro */
-    border: 1px solid rgba(150, 150, 150, 0.2);
-    border-radius: 16px;
-    font-size: 0.95rem;
-    color: var(--text-main);
-    font-family: inherit;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    margin-bottom: 16px;
-}
-
-.form-input::placeholder, .form-textarea::placeholder {
-    color: var(--text-muted);
-    opacity: 0.7;
-}
-
-/* Effetto Focus Elegante */
-.form-input:focus, .form-textarea:focus {
-    outline: none;
-    background: rgba(150, 150, 150, 0.12);
-    border-color: var(--text-main);
-}
-
-.form-textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-/* =================================================
-   FORM CONTATTI E PALLINI STATO
-================================================= */
-/* Forza il rosso fuoco sul pallino di errore/offline */
-.hud-dot.red { 
-    background-color: #FF3B30 !important; 
-    box-shadow: 0 0 8px rgba(255, 59, 48, 0.6) !important; 
-}
-[data-theme="dark"] .hud-dot.red { 
-    background-color: #FF453A !important; 
-    box-shadow: 0 0 8px rgba(255, 69, 58, 0.6) !important; 
-}
-
-/* Spaziatura e Stile Vetro per i campi del form */
-.form-input, .form-textarea {
-    width: 100%;
-    padding: 16px 20px;
-    background: rgba(150, 150, 150, 0.08);
-    border: 1px solid rgba(150, 150, 150, 0.2);
-    border-radius: 16px;
-    font-size: 0.95rem;
-    color: var(--text-main);
-    font-family: inherit;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    margin-bottom: 16px; /* Spazio tra i campi */
-}
-
-.form-input::placeholder, .form-textarea::placeholder {
-    color: var(--text-muted);
-    opacity: 0.7;
-}
-
-.form-input:focus, .form-textarea:focus {
-    outline: none;
-    background: rgba(150, 150, 150, 0.12);
-    border-color: var(--text-main);
-}
-
-/* =================================================
-   GITHUB TERMINAL ROWS MINIMAL (FIXED)
-================================================= */
-.git-row-minimal {
-    display: grid;
-    grid-template-columns: 80px 1fr 100px;
-    align-items: center;
-    padding: 14px 24px;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+.hud-data {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    transition: background 0.3s ease, color 0.3s ease;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.05); /* Sottile linea tra i commit */
+    font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; background: rgba(150,150,150,0.1); border-radius: 100px; color: var(--text-main);
 }
+.hud-dot { width: 8px; height: 8px; background: #34C759; border-radius: 50%; }
 
-/* Rimuovi la riga dall'ultimo elemento per pulizia */
-.git-row-minimal:last-child {
-    border-bottom: none;
+.card-icon-wrapper { font-size: 2.5rem; margin-bottom: 24px; }
+.card-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.03em; }
+
+/* Form iOS */
+.form-input, .form-textarea {
+    width: 100%; padding: 18px 24px; background: rgba(150, 150, 150, 0.1);
+    border: 1px solid var(--glass-border); border-radius: 24px; font-size: 1rem;
+    color: var(--text-main); font-family: inherit; transition: all 0.3s ease; box-sizing: border-box; margin-bottom: 16px;
+    backdrop-filter: blur(10px);
 }
-
-.git-row-minimal:hover {
-    background: rgba(150, 150, 150, 0.08);
-    color: var(--text-main);
-}
-
-.git-hash {
-    color: var(--accent);
-    font-family: "SF Mono", monospace;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center; /* Allinea perfettamente l'icona GitHub nell'ultima riga */
-}
-
-.git-msg {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-right: 16px;
-    min-width: 0; /* ✨ IL TRUCCO FONDAMENTALE: impedisce alla griglia di esplodere */
-}
-
-.git-date {
-    text-align: right;
-    opacity: 0.6;
-    font-size: 0.8rem;
-}
-
-/* Su mobile nascondiamo la data e ridimensioniamo la griglia */
-@media (max-width: 768px) {
-    .git-row-minimal {
-        grid-template-columns: 60px 1fr;
-        padding: 12px 16px;
-    }
-    .git-date {
-        display: none;
-    }
-}
-
-/* =================================================
-   FLIP CARDS & TRANSIZIONI (App UniTO) - BULLETPROOF
-================================================= */
-
-.view-section {
-    display: none; /* Gestito via JS */
-}
-
-.view-section.grid {
-    display: grid;
-}
-
-/* Animazione di ingresso coerente per tutti i livelli */
-.fade-in {
-    animation: fadeIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-.glass-card {
-    cursor: pointer;
-}
+.form-input:focus, .form-textarea:focus { outline: none; background: rgba(150, 150, 150, 0.15); border-color: var(--text-main); }
+.form-textarea { resize: vertical; min-height: 140px; }
