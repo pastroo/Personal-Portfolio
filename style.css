@@ -289,3 +289,55 @@ p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; font-weight: 
         display: none;
     }
 }
+
+/* =================================================
+   APPLE MAPS PULSE EFFECT
+================================================= */
+.apple-location-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Il puntino centrale fisso */
+.dot-core {
+    width: 12px;
+    height: 12px;
+    background: #007AFF;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);
+    z-index: 2;
+}
+
+/* L'anello che pulsa */
+.pulse-ring {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 122, 255, 0.4);
+    border-radius: 50%;
+    z-index: 1;
+    animation: apple-pulse 2.5s infinite ease-out;
+}
+
+@keyframes apple-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    70% {
+        transform: scale(4);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
