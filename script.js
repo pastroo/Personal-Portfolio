@@ -1,192 +1,85 @@
-/* =========================================
-              START OF SCRIPT.JS
-   ========================================= */
-
 document.addEventListener('DOMContentLoaded', () => {
-    
-    /* =========================================
-       1. GESTIONE TEMA (CHIARO/SCURO)
-       ========================================= */
-    const body = document.body;
-    // Cerca il bottone in base alla classe (o ID se l'hai aggiunto)
-    const themeToggles = document.querySelectorAll('.theme-toggle'); 
-    const savedTheme = localStorage.getItem('theme');
-    
-    // Applica il tema salvato al caricamento
-    if (savedTheme === 'dark') {
-        body.setAttribute('data-theme', 'dark');
-    }
+    // 1. Gestione Tema Chiaro/Scuro (Glassmorphism)
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlElement = document.documentElement;
 
-    // Aggiungi l'evento a tutti i bottoni toggle (nel caso ce ne sia più di uno, es. mobile/desktop)
-    themeToggles.forEach(toggleBtn => {
-        toggleBtn.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    });
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'light';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    updateButtonUI(savedTheme);
 
-    /* =========================================
-       2. CURSORE LIQUIDO NAVIGAZIONE (IOS STYLE)
-       ========================================= */
-    const navContainer = document.querySelector('.nav-links');
-    
-    if (navContainer) {
-        const navItems = document.querySelectorAll('.nav-links a');
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         
-        // Crea l'elemento cursore e aggiungilo alla navbar
-        const cursor = document.createElement('div');
-        cursor.className = 'nav-liquid-cursor';
-        navContainer.appendChild(cursor);
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('portfolio-theme', newTheme);
+        
+        updateButtonUI(newTheme);
+    });
 
-        // Funzione per muovere e ridimensionare il cursore
-        const moveCursor = (target) => {
-            if (!target) return;
-            const containerRect = navContainer.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-            
-            // Calcola la posizione relativa all'interno del contenitore
-            const left = targetRect.left - containerRect.left;
-            
-            cursor.style.width = `${targetRect.width}px`;
-            cursor.style.transform = `translateX(${left}px)`;
-            cursor.style.opacity = '1';
-        };
-
-        // Inizializza la posizione sulla voce di menu attiva al caricamento
-        const activeLink = document.querySelector('.nav-links a.active');
-        if (activeLink) {
-            // Piccolo delay per permettere al font di caricarsi e calcolare le dimensioni esatte
-            setTimeout(() => moveCursor(activeLink), 50);
+    function updateButtonUI(theme) {
+        if (theme === 'dark') {
+            themeIcon.textContent = '☀️';
+            themeToggle.innerHTML = '<span id="theme-icon">☀️</span> Light Theme';
+        } else {
+            themeIcon.textContent = '🌙';
+            themeToggle.innerHTML = '<span id="theme-icon">🌙</span> Dark Theme';
         }
+    }
 
-        // Gestione Hover
-        navItems.forEach(link => {
-            link.addEventListener('mouseenter', (e) => moveCursor(e.target));
-        });
-
-        // Quando il mouse esce dalla navbar, torna all'elemento attivo
-        navContainer.addEventListener('mouseleave', () => {
-            const currentActive = document.querySelector('.nav-links a.active');
-            if (currentActive) {
-                moveCursor(currentActive);
-            } else {
-                cursor.style.opacity = '0';
+    // 2. Animazioni allo scroll (Intersection Observer)
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Ferma l'osservazione una volta animato
             }
         });
-
-        // Ricalcola la posizione in caso di ridimensionamento della finestra
-        window.addEventListener('resize', () => {
-            const currentActive = document.querySelector('.nav-links a.active');
-            if (currentActive) moveCursor(currentActive);
-        });
-    }
-
-    /* =========================================
-       3. RILEVAMENTO SCROLL (Per effetti Navbar)
-       ========================================= */
-    const handleScroll = () => {
-        if (window.scrollY > 20) {
-            document.body.classList.add('scrolled');
-        } else {
-            document.body.classList.remove('scrolled');
-        }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Controllo iniziale
-
-    /* =========================================
-       4. INDICATORE STATO LIVE TWITCH
-       ========================================= */
-    const liveLinks = document.querySelectorAll('.live-menu-item');
-    
-    // CONFIGURAZIONE MANUALE:
-    // Imposta su 'true' quando vai in live, 'false' quando sei offline.
-    const isBroadcasting = false; 
-
-    if (isBroadcasting) {
-        liveLinks.forEach(link => {
-            link.classList.add('is-live');
-            link.setAttribute('title', 'Attualmente in Live su Twitch!');
-        });
-    }
-    
-    /* =========================================
-   LOGICA UNITO (Navigazione Bento 2026)
-   ========================================= */
-
-function switchView(targetId) {
-    document.querySelectorAll('.view-section').forEach(section => {
-        section.style.display = 'none';
-        section.classList.remove('bento-grid'); // Reset classi
+    }, {
+        threshold: 0.1, // Attiva l'animazione quando il 10% dell'elemento è visibile
+        rootMargin: "0px 0px -50px 0px"
     });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // 3. Effetto Typewriter (Macchina da scrivere) solo per la Home
+    const typewriterElement = document.getElementById('typewriter');
     
-    const target = document.getElementById(targetId);
-    if (!target) return;
-    
-    // Applica bento-grid se non è la vista file singola
-    if (targetId !== 'view-files') {
-        target.style.display = 'grid';
-        target.classList.add('bento-grid');
-    } else {
-        target.style.display = 'block';
+    if (typewriterElement) {
+        const textArray = ["Riccardo.", "a Developer.", "a Student."];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = textArray[textIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000; // Pausa alla fine della parola
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % textArray.length;
+                typeSpeed = 500; // Pausa prima di iniziare nuova parola
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Inizia l'animazione
+        setTimeout(type, 1000);
     }
-    
-    target.classList.remove('fade-in');
-    void target.offsetWidth; 
-    target.classList.add('fade-in');
-}
-
-window.openYear = function(anno) {
-    document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / ${anno}`;
-    document.getElementById('unito-title').innerText = "Scegli il Semestre.";
-
-    document.getElementById('view-semesters').innerHTML = `
-        <div class="bento-card" onclick="openSemester('${anno}', 'Primo Semestre')">
-            <div class="card-icon-wrapper">1️⃣</div>
-            <div class="hud-data">Periodo</div>
-            <h3 class="card-title">Primo Semestre</h3>
-            <p>Visualizza le materie</p>
-        </div>
-        <div class="bento-card" onclick="openSemester('${anno}', 'Secondo Semestre')">
-            <div class="card-icon-wrapper">2️⃣</div>
-            <div class="hud-data">Periodo</div>
-            <h3 class="card-title">Secondo Semestre</h3>
-            <p>Visualizza le materie</p>
-        </div>
-    `;
-    switchView('view-semesters');
-};
-
-window.openSemester = function(anno, semestre) {
-    document.getElementById('unito-breadcrumb').innerHTML = `<span onclick="resetUniToView()">UniTO</span> / <span style="cursor:pointer" onclick="openYear('${anno}')">${anno}</span> / ${semestre}`;
-    document.getElementById('unito-title').innerText = "Materie.";
-
-    document.getElementById('view-subjects').innerHTML = `
-        <div class="bento-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 1')">
-            <div class="card-icon-wrapper">📚</div>
-            <div class="hud-data">Corso</div>
-            <h3 class="card-title">Materia 1</h3>
-            <p>Esplora i laboratori</p>
-        </div>
-        <div class="bento-card" onclick="openSubject('${anno}', '${semestre}', 'Materia 2')">
-            <div class="card-icon-wrapper">💻</div>
-            <div class="hud-data">Corso</div>
-            <h3 class="card-title">Materia 2</h3>
-            <p>Esplora i laboratori</p>
-        </div>
-    `;
-    switchView('view-subjects');
-};
-
-// ... Le altre funzioni (openSubject, openLab) seguono lo stesso schema bento-card/bento-grid
 });
-
-/* =========================================
-              END OF SCRIPT.JS
-   ========================================= */

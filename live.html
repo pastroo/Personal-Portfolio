@@ -1,83 +1,67 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live - Riccardo Pastrone</title>
+    <title>Live | Riccardo Pastrone</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="ios-gradient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="unito.html">UniTO</a>
+            <a href="live.html" class="active">Twitch</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contacts</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn">
+            <span id="theme-icon">🌙</span> Dark Theme
+        </button>
+    </nav>
 
-    <div class="container">
-        <header class="site-header">
-            <a href="index.html" class="brand-logo">RP.</a>
+    <main class="page-container">
+        <div class="content reveal">
             
-            <nav>
-                <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="unito.html">UniTO</a>
-                    <a href="live.html" class="active">Live</a>
-                    <a href="about.html">About</a>
-                    <a href="contact.html">Contact</a>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-color); letter-spacing: 1px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <div style="width: 10px; height: 10px; background: #FF3B30; border-radius: 50%; box-shadow: 0 0 12px rgba(255, 59, 48, 0.8); animation: blink 2s infinite;"></div>
+                STREAMING STATUS
+            </div>
+            
+            <h1 style="font-size: 3.5rem; margin-bottom: 0.5rem;">Come To Say Hi!</h1>
+            <p>Hit the follow button and support the channel!</p>
+
+            <div class="card" style="padding: 0; overflow: hidden; margin-top: 3rem; border-radius: 24px;">
+                <div style="aspect-ratio: 16/9; width: 100%;">
+                    <iframe
+                        src="https://player.twitch.tv/?channel=codingwithpastro&parent=pastroo.github.io"
+                        height="100%"
+                        width="100%"
+                        style="border: none;"
+                        allowfullscreen>
+                    </iframe>
                 </div>
-            </nav>
-
-            <button class="theme-toggle" aria-label="Cambia tema">
-                <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-                    <mask class="moon" id="moon-mask-live">
-                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                        <circle cx="24" cy="10" r="6" fill="black" />
-                    </mask>
-                    <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-live)" fill="currentColor" />
-                </svg>
-            </button>
-        </header>
-
-        <section style="text-align: center; margin-bottom: 40px;">
-            <div class="hud-data" style="justify-content: center;">
-                <div class="hud-dot" style="background: #FF3B30; box-shadow: 0 0 12px rgba(255, 59, 48, 0.8);"></div>
-                <span>STREAMING_STATUS</span>
-            </div>
-            <h1>Come To Say Hi!</h1>
-            <p>Hit the follow button!</p>
-        </section>
-
-        <main class="bento-grid">
-            
-            <div class="bento-card span-4" style="padding: 0; overflow: hidden; aspect-ratio: 16/9; display: flex; justify-content: center; align-items: center;">
-                <iframe
-                    src="https://player.twitch.tv/?channel=codingwithpastro&parent=pastroo.github.io"
-                    height="100%"
-                    width="100%"
-                    style="border: none; border-radius: inherit;"
-                    allowfullscreen>
-                </iframe>
             </div>
 
-            <div class="bento-card span-4" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+            <div class="card" style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; text-align: left;">
                 <div>
-                    <h3 class="card-title" style="margin-bottom: 4px; font-size: 1.4rem;">Guarda direttamente sull'app</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Supporta il canale partecipando alla chat su Twitch.</p>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.2rem;">Watch on the app!</h3>
+                    <p style="margin: 0; font-size: 1rem;">Support the channel writing something in the chat!</p>
                 </div>
-                <a href="https://www.twitch.tv/codingwithpastro" target="_blank" class="btn-apple" style="margin: 0; background: #9146FF; color: white;">
-                    Apri su Twitch ↗
+                <a href="https://www.twitch.tv/codingwithpastro" target="_blank" class="btn twitch-btn">
+                    Open on Twitch ↗
                 </a>
             </div>
 
-        </main>
+        </div>
+    </main>
 
-        <footer class="site-footer" style="text-align: center; margin-top: 60px;">
-            <div class="hud-data" style="justify-content: center; background: transparent;">
-                &copy; 2026 Riccardo Pastrone
-            </div>
-        </footer>
-    </div>
+    <footer class="site-footer reveal">
+        <div class="hud-data">
+            &copy; 2026 Riccardo Pastrone
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
