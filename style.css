@@ -240,7 +240,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
 .social-icon-link svg {
     width: 28px;
     height: 28px;
-    fill: var(--text-color); /* Prende il colore del testo in base al tema */
+    fill: var(--text-color);
     transition: fill 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -249,7 +249,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     transform: scale(1.2);
 }
 
-/* Fix per i campi del form per renderli uguali al design base */
+/* Potenzial Fix for grid visual bug */
 .contact-form input, .contact-form textarea {
     padding: 1rem;
     border-radius: 12px;
@@ -272,7 +272,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 4; /* Lo tiene sopra la mappa e l'ombra */
+    z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -308,9 +308,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
 /* Bento Cards About Page */
 .grid-container.bento-layout {
     display: grid;
-    /* Definiamo 3 colonne uguali */
     grid-template-columns: repeat(3, 1fr);
-    /* Definiamo la struttura visiva */
     grid-template-areas: 
         "profile bio bio"
         "location tech tech";
@@ -318,13 +316,13 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     align-items: stretch;
 }
 
-/* Assegnazione delle aree alle card */
+/* Area Assegnation to card */
 .card-profile { grid-area: profile; }
 .card-bio { grid-area: bio; }
 .card-location { grid-area: location; }
 .card-tech { grid-area: tech; }
 
-/* Forza le card a riempire tutto lo spazio verticale della riga */
+/* Provisional Forcing */
 .bento-layout .card {
     display: flex;
     flex-direction: column;
@@ -332,7 +330,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     margin: 0;
 }
 
-/* Effetto elaborato: Glassmorphism avanzato */
+/* Glassmorphism */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(20px);
@@ -341,7 +339,7 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* Responsività: per tablet e smartphone diventa una colonna singola */
+/* Mobile view */
 @media (max-width: 992px) {
     .grid-container.bento-layout {
         grid-template-columns: 1fr;
@@ -356,20 +354,18 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
 
 /* Interactive Map */
 
-/* Filtro base per il Tema Chiaro (leggermente desaturato stile Apple) */
+/* Light Theme */
 .card-location iframe {
     filter: saturate(0.5) brightness(1.05) contrast(0.9);
     transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 24px;
 }
 
-/* Filtro avanzato per il Tema Scuro (Effetto Mappa Notturna) */
+/* Dark Theme */
 [data-theme="dark"] .card-location iframe {
-    /* Invertiamo i colori, ruotiamo la tinta per mantenere il blu e regoliamo luminosità/contrasto */
     filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%) saturate(60%);
 }
 
-/* Opzionale: Rendi la mappa più scura quando il mouse non è sopra (focus effect) */
 .card-location:hover iframe {
     filter: saturate(0.8) brightness(1);
 }
@@ -381,22 +377,17 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
 
 /* Hover Effect */
 .card {
-    /* Assicuriamoci che il movimento sia fluido e "gommoso" stile Apple */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .card:hover {
-    /* La scheda si alza e si ingrandisce leggermente */
     transform: translateY(-8px) scale(1.02);
-    /* L'ombra diventa più grande e sfumata */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    /* Si illumina il bordo */
     border-color: var(--accent-color);
-    /* FONDAMENTALE: porta la scheda sopra le altre nella griglia */
     z-index: 10; 
 }
 
-/* Bagliore specifico per il tema scuro */
+/* Light for Dark Theme */
 [data-theme="dark"] .card:hover {
     box-shadow: 0 20px 40px rgba(41, 151, 255, 0.15);
 }

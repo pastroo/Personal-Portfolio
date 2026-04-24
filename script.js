@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Gestione Tema Chiaro/Scuro (Glassmorphism)
+    // 1. Light / Dark Theme Engine
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
     const htmlElement = document.documentElement;
@@ -28,24 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Animazioni allo scroll (Intersection Observer)
+    // 2. Scroll Animations
     const revealElements = document.querySelectorAll('.reveal');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Ferma l'osservazione una volta animato
+                observer.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.1, // Attiva l'animazione quando il 10% dell'elemento è visibile
+        threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
 
-    // 3. Effetto Typewriter (Macchina da scrivere) solo per la Home
+    // 3. Typewriter Effect Homepage
     const typewriterElement = document.getElementById('typewriter');
     
     if (typewriterElement) {
@@ -68,18 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let typeSpeed = isDeleting ? 50 : 100;
 
             if (!isDeleting && charIndex === currentText.length) {
-                typeSpeed = 2000; // Pausa alla fine della parola
+                typeSpeed = 1500; // Pause at End
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 textIndex = (textIndex + 1) % textArray.length;
-                typeSpeed = 500; // Pausa prima di iniziare nuova parola
+                typeSpeed = 500; // Pause Before Restarting
             }
 
             setTimeout(type, typeSpeed);
         }
 
-        // Inizia l'animazione
+        // Starting
         setTimeout(type, 1000);
     }
 });
