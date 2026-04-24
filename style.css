@@ -392,7 +392,108 @@ p { font-size: 1.25rem; color: #86868b; margin-bottom: 2.5rem; }
     box-shadow: 0 20px 40px rgba(41, 151, 255, 0.15);
 }
 
+/* Spatial Rendering */
 
+/* Layout for Single Card */
+.setup-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem;
+    text-align: left;
+    min-height: 400px;
+}
+
+/* Back Light */
+.card-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+/* Colours */
+.blue-glow { background: radial-gradient(circle at 50% 60%, rgba(0, 102, 204, 0.08) 0%, transparent 65%); }
+.purple-glow { background: radial-gradient(circle at 50% 60%, rgba(175, 82, 222, 0.08) 0%, transparent 65%); }
+.red-glow { background: radial-gradient(circle at 50% 60%, rgba(255, 59, 48, 0.08) 0%, transparent 65%); }
+
+/* More Light in Dark Mode */
+[data-theme="dark"] .blue-glow { background: radial-gradient(circle at 50% 60%, rgba(41, 151, 255, 0.15) 0%, transparent 65%); }
+[data-theme="dark"] .purple-glow { background: radial-gradient(circle at 50% 60%, rgba(191, 90, 242, 0.15) 0%, transparent 65%); }
+[data-theme="dark"] .red-glow { background: radial-gradient(circle at 50% 60%, rgba(255, 69, 58, 0.15) 0%, transparent 65%); }
+
+/* Positioning */
+.setup-header, .setup-emoji, .setup-desc {
+    z-index: 2;
+    position: relative;
+}
+
+/* Heading */
+.setup-header { margin-bottom: 1rem; }
+.setup-title { font-size: 2.2rem; margin: 0; line-height: 1.2; }
+
+.setup-label { 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    letter-spacing: 1.5px; 
+    margin-bottom: 0.5rem; 
+    text-transform: uppercase; 
+}
+.blue-label { color: var(--accent-color); }
+.purple-label { color: #AF52DE; }
+.red-label { color: #FF3B30; }
+
+/* Emoji */
+.setup-emoji {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+}
+
+.floating-object {
+    font-size: 8rem;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+    animation: spatialFloat 6s ease-in-out infinite;
+}
+
+[data-theme="dark"] .floating-object {
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
+}
+
+@keyframes spatialFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.02); }
+}
+
+/* Description */
+.setup-desc {
+    margin-top: auto;
+}
+
+.setup-desc p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.55;
+    line-height: 1.5;
+}
+
+/* Second Setup Colours */
+.silver-glow { background: radial-gradient(circle at 50% 60%, rgba(142, 142, 147, 0.08) 0%, transparent 65%); }
+.teal-glow { background: radial-gradient(circle at 50% 60%, rgba(48, 209, 199, 0.08) 0%, transparent 65%); }
+.orange-glow { background: radial-gradient(circle at 50% 60%, rgba(255, 159, 10, 0.08) 0%, transparent 65%); }
+
+[data-theme="dark"] .silver-glow { background: radial-gradient(circle at 50% 60%, rgba(174, 174, 178, 0.15) 0%, transparent 65%); }
+[data-theme="dark"] .teal-glow { background: radial-gradient(circle at 50% 60%, rgba(100, 210, 255, 0.15) 0%, transparent 65%); }
+[data-theme="dark"] .orange-glow { background: radial-gradient(circle at 50% 60%, rgba(255, 179, 64, 0.15) 0%, transparent 65%); }
+
+.silver-label { color: #8e8e93; }
+.teal-label { color: #30d1c7; }
+.orange-label { color: #ff9f0a; }
 
 
 
